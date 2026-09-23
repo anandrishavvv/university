@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Students_on_Probation</fullName>
+    <columns>NAME</columns>
+    <columns>Student_Name__c</columns>
+    <columns>Faculty_Advisor__c</columns>
+    <columns>Cumulative_GPA__c</columns>
+    <columns>Program__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Academic_Standing__c</field>
+        <operation>equals</operation>
+        <value>Probation</value>
+    </filters>
+    <label>Students on Probation</label>
+</ListView>

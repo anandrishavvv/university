@@ -1,0 +1,236 @@
+<template>
+    <div class="patient-style-wrapper slds-m-bottom_medium">
+        
+        <!-- Header Banner: Fluid Blue Gradient with Avatar, Student Name, Student ID (UHID), & Active Status -->
+        <div class="hero-banner">
+            <div class="banner-content slds-grid slds-grid_vertical-align-center slds-wrap">
+                <!-- Left: Circular Avatar with 3D Inner Icon -->
+                <div class="avatar-ring slds-m-right_medium">
+                    <div class="avatar-squircle">
+                        <lightning-icon icon-name="standard:avatar" size="small" class="white-avatar-icon"></lightning-icon>
+                    </div>
+                </div>
+
+                <!-- Center: Student Name & ID -->
+                <div class="identity-block slds-col">
+                    <h1 class="student-name-text slds-truncate" title={studentName}>{studentName}</h1>
+                    <div class="student-uhid-text">Student ID: {studentCode}</div>
+                </div>
+
+                <!-- Right: Status Pill & Sync Button -->
+                <div class="status-actions-block slds-grid slds-grid_vertical-align-center slds-m-top_x-small slds-m-medium-top_none">
+                    <div class={statusPillClass} title="Enrolment Status">
+                        <span class={statusDotClass}></span>
+                        <span>{enrolmentStatus}</span>
+                    </div>
+                    <button class="btn-sync slds-m-left_small" onclick={handleRefresh} title="Sync Student Data">
+                        <lightning-icon icon-name="utility:refresh" size="xx-small" class="sync-icon"></lightning-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spinner & Error handling -->
+        <template lwc:if={isLoading}>
+            <div class="loading-container slds-p-around_xx-large slds-align_absolute-center">
+                <lightning-spinner alternative-text="Loading student data" size="medium"></lightning-spinner>
+            </div>
+        </template>
+        <template lwc:elseif={errorMessage}>
+            <div class="slds-p-around_medium error-container">
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <lightning-icon icon-name="utility:error" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                    <h2>{errorMessage}</h2>
+                </div>
+            </div>
+        </template>
+
+        <!-- Main Body: Clean Category Cards with 3D Squircles & Pastel Themes -->
+        <template lwc:else>
+            <div class="sections-container">
+                
+                <!-- SECTION 1: Academic Standing & Performance -->
+                <div class="category-card">
+                    <!-- Section Header -->
+                    <div class="section-header slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
+                        <div class="section-icon-box box-blue slds-m-right_small">
+                            <lightning-icon icon-name="utility:education" size="x-small" class="white-icon"></lightning-icon>
+                        </div>
+                        <div>
+                            <h2 class="section-title">Academic Performance</h2>
+                            <p class="section-subtitle">Overview of student grades, attendance & fee standing</p>
+                        </div>
+                    </div>
+
+                    <!-- 3-Column Responsive Grid of 3D Squircle Tiles -->
+                    <div class="tiles-grid">
+                        
+                        <!-- Field 4: Cumulative GPA (Blue Theme) -->
+                        <div class="metric-tile tile-blue">
+                            <div class="tile-icon-squircle squircle-blue">
+                                <lightning-icon icon-name="utility:award" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text">
+                                <span class="tile-label">Cumulative GPA</span>
+                                <div class="tile-val-row">
+                                    <span class="tile-primary-val">{formattedGpa}</span>
+                                    <span class="tile-sub-val"> / 4.00</span>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-blue"></div>
+                        </div>
+
+                        <!-- Field 5: Attendance (Green Theme) -->
+                        <div class="metric-tile tile-green">
+                            <div class="tile-icon-squircle squircle-green">
+                                <lightning-icon icon-name="utility:check" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text">
+                                <span class="tile-label">Attendance</span>
+                                <div class="tile-val-row">
+                                    <span class="tile-primary-val">{formattedAttendance}%</span>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-green"></div>
+                        </div>
+
+                        <!-- Field 6: Fee Status (Adaptive Theme) -->
+                        <div class={feeTileClass}>
+                            <div class={feeSquircleClass}>
+                                <lightning-icon icon-name="utility:money" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text">
+                                <span class="tile-label">Fee Status</span>
+                                <div class="tile-val-row">
+                                    <span class={feeValTextClass}>{feeStatus}</span>
+                                </div>
+                            </div>
+                            <div class={feeBarClass}></div>
+                        </div>
+
+                        <!-- Field 7: Registered Courses (Cyan Theme) -->
+                        <div class="metric-tile tile-cyan">
+                            <div class="tile-icon-squircle squircle-cyan">
+                                <lightning-icon icon-name="utility:notebook" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text">
+                                <span class="tile-label">Registered Courses</span>
+                                <div class="tile-val-row">
+                                    <span class="tile-primary-val">{registeredCourseCount}</span>
+                                    <span class="tile-sub-val"> Active</span>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-cyan"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SECTION 2: Enrolment & Institutional Details -->
+                <div class="category-card slds-m-top_medium">
+                    <!-- Section Header -->
+                    <div class="section-header slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
+                        <div class="section-icon-box box-purple slds-m-right_small">
+                            <lightning-icon icon-name="utility:company" size="x-small" class="white-icon"></lightning-icon>
+                        </div>
+                        <div>
+                            <h2 class="section-title">Enrolment & Institutional Details</h2>
+                            <p class="section-subtitle">Program curriculum, department, and faculty assignment</p>
+                        </div>
+                    </div>
+
+                    <!-- 3-Column Responsive Grid of 3D Squircle Tiles -->
+                    <div class="tiles-grid">
+                        
+                        <!-- Field 8: Program (Purple Theme) -->
+                        <div class="metric-tile tile-purple">
+                            <div class="tile-icon-squircle squircle-purple">
+                                <lightning-icon icon-name="utility:standard_objects" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text slds-truncate">
+                                <span class="tile-label">Program</span>
+                                <div class="tile-val-row slds-truncate">
+                                    <template lwc:if={programId}>
+                                        <a href={programUrl} class="tile-link slds-truncate" title={programName}>{programName}</a>
+                                    </template>
+                                    <template lwc:else>
+                                        <span class="tile-primary-val slds-truncate" title={programName}>{programName}</span>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-purple"></div>
+                        </div>
+
+                        <!-- Field 9: Department (Indigo Theme) -->
+                        <div class="metric-tile tile-indigo">
+                            <div class="tile-icon-squircle squircle-indigo">
+                                <lightning-icon icon-name="utility:work_order_type" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text slds-truncate">
+                                <span class="tile-label">Department</span>
+                                <div class="tile-val-row slds-truncate">
+                                    <span class="tile-primary-val slds-truncate" title={department}>{department}</span>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-indigo"></div>
+                        </div>
+
+                        <!-- Field 10: Semester (Gold/Amber Theme) -->
+                        <div class="metric-tile tile-amber">
+                            <div class="tile-icon-squircle squircle-amber">
+                                <lightning-icon icon-name="utility:event" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text">
+                                <span class="tile-label">Current Semester</span>
+                                <div class="tile-val-row">
+                                    <span class="tile-primary-val">{semester}</span>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-amber"></div>
+                        </div>
+
+                        <!-- Field 11: Faculty Advisor (Rose/Red Theme) -->
+                        <div class="metric-tile tile-rose">
+                            <div class="tile-icon-squircle squircle-rose">
+                                <lightning-icon icon-name="utility:user" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text slds-truncate">
+                                <span class="tile-label">Faculty Advisor</span>
+                                <div class="tile-val-row slds-truncate">
+                                    <template lwc:if={facultyAdvisorId}>
+                                        <a href={facultyAdvisorUrl} class="tile-link slds-truncate" title={facultyAdvisorName}>{facultyAdvisorName}</a>
+                                    </template>
+                                    <template lwc:else>
+                                        <span class="tile-primary-val slds-truncate" title={facultyAdvisorName}>{facultyAdvisorName}</span>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-rose"></div>
+                        </div>
+
+                        <!-- Field 12: Admission Date (Teal Theme) -->
+                        <div class="metric-tile tile-teal">
+                            <div class="tile-icon-squircle squircle-teal">
+                                <lightning-icon icon-name="utility:date_time" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="tile-text">
+                                <span class="tile-label">Admission Date</span>
+                                <div class="tile-val-row">
+                                    <template lwc:if={admissionDate}>
+                                        <lightning-formatted-date-time value={admissionDate} year="numeric" month="2-digit" day="2-digit" class="tile-primary-val"></lightning-formatted-date-time>
+                                    </template>
+                                    <template lwc:else>
+                                        <span class="tile-primary-val">Not Set</span>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="bottom-accent-bar bar-teal"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </template>
+    </div>
+</template>

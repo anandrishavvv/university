@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Undergraduate</fullName>
+    <active>true</active>
+    <label>Undergraduate</label>
+    <picklistValues>
+        <picklist>Academic_Standing__c</picklist>
+        <values>
+            <fullName>Dismissed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Good Standing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Probation</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Enrolment_Status__c</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enrolled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Graduated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offer Accepted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Leave</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Withdrawn</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

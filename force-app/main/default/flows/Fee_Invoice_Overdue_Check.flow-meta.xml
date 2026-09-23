@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Overdue_Email</name>
+        <label>Send Overdue Email</label>
+        <locationX>50</locationX>
+        <locationY>468</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Student__r.Email__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Overdue Invoice — Action Required</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>fx_OverdueEmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_If_Past_Due</name>
+        <label>Check If Past Due</label>
+        <locationX>182</locationX>
+        <locationY>252</locationY>
+        <defaultConnectorLabel>Not Due Yet</defaultConnectorLabel>
+        <rules>
+            <name>Is_Past_Due</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Due_Date__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Due_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Mark_As_Overdue</targetReference>
+            </connector>
+            <label>Is Past Due</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>fx_OverdueEmailBody</name>
+        <dataType>String</dataType>
+        <expression>&quot;Dear &quot; &amp; {!$Record.Student__r.Student_Name__c} &amp; &quot;,&quot; &amp; BR() &amp; BR() &amp; 
+&quot;This is an important notice that your tuition and fee invoice for &quot; &amp; TEXT({!$Record.Term__c}) &amp; &quot; is now overdue.&quot; &amp; BR() &amp; BR() &amp; 
+&quot;Invoice Number: &quot; &amp; {!$Record.Invoice_Number__c} &amp; BR() &amp; 
+&quot;Net Amount Due: $&quot; &amp; TEXT({!$Record.Net_Amount_Due__c}) &amp; BR() &amp; 
+&quot;Due Date: &quot; &amp; TEXT({!$Record.Due_Date__c}) &amp; BR() &amp; BR() &amp; 
+&quot;Please complete payment immediately. Outstanding balances may block future course registration and academic standing.&quot; &amp; BR() &amp; BR() &amp; 
+&quot;Sincerely,&quot; &amp; BR() &amp; 
+&quot;Brightford University Finance Office&quot;</expression>
+    </formulas>
+    <interviewLabel>Fee Invoice Overdue Check {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Fee Invoice Overdue Check</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Mark_As_Overdue</name>
+        <label>Mark As Overdue</label>
+        <locationX>50</locationX>
+        <locationY>360</locationY>
+        <connector>
+            <targetReference>Send_Overdue_Email</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Payment_Status__c</field>
+            <value>
+                <stringValue>Overdue</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Check_If_Past_Due</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Payment_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Paid</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Payment_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Overdue</stringValue>
+            </value>
+        </filters>
+        <object>Fee_Invoice__c</object>
+        <schedule>
+            <dayOfMonthToRun>0</dayOfMonthToRun>
+            <frequency>Daily</frequency>
+            <frequencyNumber>0</frequencyNumber>
+            <startDate>2026-09-14</startDate>
+            <startTime>15:15:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

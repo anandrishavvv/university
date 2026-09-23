@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Fee_Invoice_Email</name>
+        <label>Send Fee Invoice Email</label>
+        <locationX>176</locationX>
+        <locationY>539</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>fx_RecipientEmail</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <elementReference>fx_Subject</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>text_EmailBody</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <formulas>
+        <name>fx_RecipientEmail</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Get_Student.Email__c}), {!Get_Owner.Email}, {!Get_Student.Email__c} &amp; &quot;,&quot; &amp; {!Get_Owner.Email})</expression>
+    </formulas>
+    <formulas>
+        <name>fx_Subject</name>
+        <dataType>String</dataType>
+        <expression>&quot;Your Fee Invoice for &quot; &amp; TEXT({!$Record.Term__c}) &amp; &quot; is ready&quot;</expression>
+    </formulas>
+    <interviewLabel>Fee Invoice Send Generated Email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Fee Invoice Send Generated Email After Save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Owner</name>
+        <label>Get Owner</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Send_Fee_Invoice_Email</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Student</name>
+        <label>Get Student</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Owner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Student__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Student__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Student</targetReference>
+        </connector>
+        <object>Fee_Invoice__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>text_EmailBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Dear Student,
+
+Your tuition fee invoice for {!$Record.Term__c} has been generated.
+
+Gross Amount: ₹{!$Record.Gross_Amount__c}
+Scholarship Discount: ₹{!$Record.Scholarship_Discount__c}
+Net Amount Due: ₹{!$Record.Net_Amount_Due__c}
+Due Date: {!$Record.Due_Date__c}
+
+Please ensure payment is completed by the due date to avoid registration blocks.
+
+Finance &amp; Student Accounts
+Brightford University</text>
+    </textTemplates>
+</Flow>

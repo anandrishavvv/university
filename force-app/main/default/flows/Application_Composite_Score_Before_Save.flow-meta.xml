@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Composite_Score</name>
+        <label>Set Composite Score</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Composite_Score__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fx_CalculatedCompositeScore</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <formulas>
+        <name>fx_CalculatedCompositeScore</name>
+        <dataType>Number</dataType>
+        <expression>(BLANKVALUE({!$Record.Entrance_Score__c}, 0) * 0.6) + (BLANKVALUE({!$Record.Interview_Score__c}, 0) * 0.4)</expression>
+        <scale>2</scale>
+    </formulas>
+    <interviewLabel>Application Composite Score {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Application Composite Score Before Save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Composite_Score</targetReference>
+        </connector>
+        <object>Application__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
