@@ -1,12 +1,15 @@
 <template>
     <div class="student-wrapper">
 
+        <!-- Top Profile & Institutional Banner -->
         <div class="student-header">
-            <img src={rgpvCampusUrl} class="header-campus" alt="Campus background">
+            <!-- Panoramic Campus Building & Seal Banner -->
+            <img src={rgpvHeaderBannerUrl} class="header-campus-banner" alt="RGPV Campus & Seal" />
 
+            <!-- Left: 3D Student Avatar & Identity Info -->
             <div class="header-left">
                 <div class="avatar">
-                    <img src={studentAvatarUrl} alt={studentName} class="avatar-image">
+                    <img src={studentAvatarUrl} alt={studentName} class="avatar-image" />
                 </div>
 
                 <div class="student-identity">
@@ -25,21 +28,12 @@
                 </div>
             </div>
 
-            <div class="header-right">
-                <div class="brand-block">
-                    <img src={rgpvLogoUrl} class="brand-crest" alt="RGPV crest">
-                    <div class="brand-text">
-                        <span class="brand-line">RAJIV GANDHI PROUDYOGIKI</span>
-                        <span class="brand-line">VISHWAVIDYALAYA, BHOPAL</span>
-                        <span class="brand-tagline">Excellence in Technical Education</span>
-                    </div>
-                </div>
-
+            <!-- Far Right: Refresh Action Button -->
+            <div class="header-actions">
                 <button
                     class="refresh-btn"
                     onclick={handleRefresh}
                     title="Refresh Student Data">
-
                     <lightning-icon
                         icon-name="utility:refresh"
                         size="small"
@@ -71,6 +65,7 @@
 
         <template lwc:else>
 
+            <!-- Section 1: Academic Performance -->
             <section class="section academic-section">
 
                 <div class="section-heading">
@@ -88,12 +83,13 @@
                     </div>
 
                     <div class="rgpv-brand">
-                        <img src={rgpvAcadWatermarkUrl} alt="RGPV crest" class="brand-watermark-img">
+                        <img src={rgpvAcadWatermarkUrl} alt="RGPV watermark" class="brand-watermark-img" />
                     </div>
                 </div>
 
                 <div class="academic-grid">
 
+                    <!-- Metric 1: GPA -->
                     <div class="metric-card metric-orange">
                         <div class="metric-top">
                             <div class="metric-icon icon-orange">
@@ -104,55 +100,61 @@
                                 </lightning-icon>
                             </div>
 
-                            <div class="metric-ghost" aria-hidden="true">
+                            <div class="metric-ghost ghost-orange" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <rect x="3" y="13" width="4" height="8" rx="1.4"></rect>
                                     <rect x="10" y="8" width="4" height="13" rx="1.4"></rect>
                                     <rect x="17" y="3" width="4" height="18" rx="1.4"></rect>
+                                    <polygon points="19,1 20.2,3.4 22.8,3.8 20.9,5.7 21.4,8.3 19,7 16.6,8.3 17.1,5.7 15.2,3.8 17.8,3.4" fill="#ea580c"></polygon>
                                 </svg>
                             </div>
                         </div>
 
-                        <span class="metric-label">GPA</span>
-                        <div class="metric-value">
-                            {formattedGpa}
-                            <small>/ 4.00</small>
+                        <div class="metric-body">
+                            <span class="metric-label">GPA</span>
+                            <div class="metric-val-row">
+                                <span class="metric-primary-val">{formattedGpa}</span>
+                                <span class="metric-sub-val">/ 4.00</span>
+                            </div>
                         </div>
 
-                        <div class="metric-track">
+                        <div class="metric-track track-orange">
                             <div class={gpaBarClass}></div>
                         </div>
                     </div>
 
+                    <!-- Metric 2: Attendance -->
                     <div class="metric-card metric-green">
                         <div class="metric-top">
                             <div class="metric-icon icon-green">
                                 <lightning-icon
-                                    icon-name="utility:check"
+                                    icon-name="utility:chart"
                                     size="small"
                                     class="white-icon">
                                 </lightning-icon>
                             </div>
 
-                            <div class="metric-ghost" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="metric-ghost ghost-green" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="3,17 9,11 13,14 21,5"></polyline>
                                     <polyline points="16,5 21,5 21,10"></polyline>
                                 </svg>
                             </div>
                         </div>
 
-                        <span class="metric-label">Attendance</span>
-                        <div class="metric-value">
-                            {formattedAttendance}%
+                        <div class="metric-body">
+                            <span class="metric-label">Attendance</span>
+                            <div class="metric-val-row">
+                                <span class="metric-primary-val">{formattedAttendance}%</span>
+                            </div>
                         </div>
 
-                        <div class="metric-track">
+                        <div class="metric-track track-green">
                             <div class={attendanceBarClass}></div>
                         </div>
                     </div>
 
+                    <!-- Metric 3: Fee Status -->
                     <div class={feeTileClass}>
                         <div class="metric-top">
                             <div class={feeSquircleClass}>
@@ -163,21 +165,24 @@
                                 </lightning-icon>
                             </div>
 
-                            <div class="metric-ghost" aria-hidden="true">
+                            <div class="metric-ghost ghost-amber" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <rect x="3" y="5" width="18" height="3.2" rx="1.6"></rect>
-                                    <rect x="3" y="10.4" width="13" height="3.2" rx="1.6"></rect>
-                                    <rect x="3" y="15.8" width="8" height="3.2" rx="1.6"></rect>
+                                    <rect x="3" y="4" width="18" height="3" rx="1.5"></rect>
+                                    <rect x="3" y="9.5" width="13" height="3" rx="1.5"></rect>
+                                    <rect x="3" y="15" width="8" height="3" rx="1.5"></rect>
                                 </svg>
                             </div>
                         </div>
 
-                        <span class="metric-label">Fee Status</span>
-                        <div class={feeValTextClass}>
-                            {feeStatus}
+                        <div class="metric-body">
+                            <span class="metric-label">Fee Status</span>
+                            <div class="metric-val-row">
+                                <span class={feeValTextClass}>{feeStatus}</span>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- Metric 4: Courses -->
                     <div class="metric-card metric-blue">
                         <div class="metric-top">
                             <div class="metric-icon icon-blue">
@@ -188,21 +193,23 @@
                                 </lightning-icon>
                             </div>
 
-                            <div class="metric-ghost" aria-hidden="true">
+                            <div class="metric-ghost ghost-blue" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <polygon points="12,3 22,8 12,13 2,8"></polygon>
-                                    <polygon points="12,12 22,17 12,22 2,17" opacity="0.55"></polygon>
+                                    <polygon points="12,11 22,16 12,21 2,16" opacity="0.6"></polygon>
                                 </svg>
                             </div>
                         </div>
 
-                        <span class="metric-label">Courses</span>
-                        <div class="metric-value">
-                            {registeredCourseCount}
-                            <small>Active</small>
+                        <div class="metric-body">
+                            <span class="metric-label">Courses</span>
+                            <div class="metric-val-row">
+                                <span class="metric-primary-val">{registeredCourseCount}</span>
+                                <span class="metric-sub-val">Active</span>
+                            </div>
                         </div>
 
-                        <div class="metric-track">
+                        <div class="metric-track track-blue">
                             <div class={courseBarClass}></div>
                         </div>
                     </div>
@@ -210,6 +217,7 @@
                 </div>
             </section>
 
+            <!-- Section 2: Enrollment & Institutional Details -->
             <section class="section institutional-section">
 
                 <div class="section-heading">
@@ -227,17 +235,19 @@
                     </div>
 
                     <div class="rgpv-brand">
-                        <img src={rgpvInstWatermarkUrl} alt="RGPV crest" class="brand-watermark-img">
+                        <img src={rgpvInstWatermarkUrl} alt="RGPV watermark" class="brand-watermark-img" />
                     </div>
                 </div>
 
                 <div class="details-grid">
 
-                    <div class="detail-card detail-card-3col tint-orange">
-                        <div class="detail-icon">
+                    <!-- Program -->
+                    <div class="detail-card detail-card-3col tint-coral">
+                        <div class="detail-icon icon-coral">
                             <lightning-icon
-                                icon-name="utility:standard_objects"
-                                size="small">
+                                icon-name="utility:layers"
+                                size="small"
+                                class="white-icon">
                             </lightning-icon>
                         </div>
 
@@ -265,15 +275,17 @@
                         <lightning-icon
                             icon-name="utility:education"
                             size="small"
-                            class="detail-ghost">
+                            class="detail-ghost ghost-coral">
                         </lightning-icon>
                     </div>
 
+                    <!-- Department -->
                     <div class="detail-card detail-card-3col tint-blue">
-                        <div class="detail-icon">
+                        <div class="detail-icon icon-blue">
                             <lightning-icon
-                                icon-name="utility:work_order_type"
-                                size="small">
+                                icon-name="utility:knowledge_base"
+                                size="small"
+                                class="white-icon">
                             </lightning-icon>
                         </div>
 
@@ -289,15 +301,17 @@
                         <lightning-icon
                             icon-name="utility:company"
                             size="small"
-                            class="detail-ghost">
+                            class="detail-ghost ghost-blue">
                         </lightning-icon>
                     </div>
 
+                    <!-- Current Semester -->
                     <div class="detail-card detail-card-3col tint-amber">
-                        <div class="detail-icon">
+                        <div class="detail-icon icon-amber">
                             <lightning-icon
                                 icon-name="utility:event"
-                                size="small">
+                                size="small"
+                                class="white-icon">
                             </lightning-icon>
                         </div>
 
@@ -311,15 +325,17 @@
                         <lightning-icon
                             icon-name="utility:notebook"
                             size="small"
-                            class="detail-ghost">
+                            class="detail-ghost ghost-amber">
                         </lightning-icon>
                     </div>
 
+                    <!-- Faculty Advisor -->
                     <div class="detail-card detail-card-2col tint-purple">
-                        <div class="detail-icon">
+                        <div class="detail-icon icon-purple">
                             <lightning-icon
                                 icon-name="utility:user"
-                                size="small">
+                                size="small"
+                                class="white-icon">
                             </lightning-icon>
                         </div>
 
@@ -347,15 +363,17 @@
                         <lightning-icon
                             icon-name="utility:user_group"
                             size="small"
-                            class="detail-ghost">
+                            class="detail-ghost ghost-purple">
                         </lightning-icon>
                     </div>
 
+                    <!-- Admission Date -->
                     <div class="detail-card detail-card-2col tint-green">
-                        <div class="detail-icon">
+                        <div class="detail-icon icon-green">
                             <lightning-icon
                                 icon-name="utility:date_time"
-                                size="small">
+                                size="small"
+                                class="white-icon">
                             </lightning-icon>
                         </div>
 
@@ -382,7 +400,7 @@
                         <lightning-icon
                             icon-name="utility:event"
                             size="small"
-                            class="detail-ghost">
+                            class="detail-ghost ghost-green">
                         </lightning-icon>
                     </div>
 
