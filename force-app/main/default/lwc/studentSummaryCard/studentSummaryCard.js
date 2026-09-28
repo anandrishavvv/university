@@ -12,32 +12,6 @@ export default class StudentSummaryCard extends LightningElement {
     isLoading = true;
     wiredStudentResult;
 
-    get isCompactMode() {
-        return (this.displayMode || '').toLowerCase() === 'compact';
-    }
-
-    get isDetailsMode() {
-        return (this.displayMode || '').toLowerCase() === 'details';
-    }
-
-    get showTopBannerCard() {
-        return !this.isDetailsMode;
-    }
-
-    get showDetailsSections() {
-        return !this.isCompactMode;
-    }
-
-    get wrapperClass() {
-        if (this.isCompactMode) {
-            return 'student-wrapper compact-wrapper';
-        }
-        if (this.isDetailsMode) {
-            return 'student-wrapper details-wrapper';
-        }
-        return 'student-wrapper full-wrapper';
-    }
-
     get rgpvLogoUrl() {
         return `${RGPV_ASSETS}/logo/rgpv-logo.png`;
     }
@@ -50,6 +24,10 @@ export default class StudentSummaryCard extends LightningElement {
         return `${RGPV_ASSETS}/campus/rgpv-campus-banner.png`;
     }
 
+    get rgpvWatermarkBgUrl() {
+        return `${RGPV_ASSETS}/watermarks/rgpv-watermark-bg.png`;
+    }
+
     get studentAvatarUrl() {
         const gender = (this.studentData?.gender || '').toLowerCase();
         if (gender === 'female') {
@@ -58,40 +36,12 @@ export default class StudentSummaryCard extends LightningElement {
         if (gender === 'male') {
             return `${RGPV_ASSETS}/avatar/student-avatar-male-circle.png`;
         }
-        // Fallback heuristic for female names
+        // Fallback heuristic for typical female names
         const name = (this.studentName || '').toLowerCase();
         if (name.includes('ananya') || name.includes('priya') || name.includes('neha') || name.includes('pooja') || name.includes('shreya') || name.includes('aditi')) {
             return `${RGPV_ASSETS}/avatar/student-avatar-female-circle.png`;
         }
         return `${RGPV_ASSETS}/avatar/student-avatar-male-circle.png`;
-    }
-
-    get rgpvWatermarkBgUrl() {
-        return `${RGPV_ASSETS}/watermarks/rgpv-watermark-bg.png`;
-    }
-
-    get detailsPageStyle() {
-        return `background-image: url('${this.rgpvWatermarkBgUrl}');`;
-    }
-
-    get rgpvAcadWatermarkUrl() {
-        return `${RGPV_ASSETS}/watermarks/acad-watermark.png`;
-    }
-
-    get rgpvInstWatermarkUrl() {
-        return `${RGPV_ASSETS}/watermarks/inst-watermark.png`;
-    }
-
-    get gpaBarClass() {
-        return 'metric-fill fill-orange';
-    }
-
-    get attendanceBarClass() {
-        return 'metric-fill fill-green';
-    }
-
-    get courseBarClass() {
-        return 'metric-fill fill-blue';
     }
 
     @wire(getStudentSummary, { studentId: '$recordId' })
@@ -112,7 +62,6 @@ export default class StudentSummaryCard extends LightningElement {
 
     async handleRefresh() {
         this.isLoading = true;
-
         try {
             await refreshApex(this.wiredStudentResult);
         } catch (e) {
@@ -136,7 +85,6 @@ export default class StudentSummaryCard extends LightningElement {
 
     get statusPillClass() {
         const status = (this.enrolmentStatus || '').toLowerCase();
-
         if (status === 'active' || status === 'enrolled') {
             return 'status-pill pill-active';
         } else if (status === 'offer accepted' || status === 'on leave') {
@@ -146,13 +94,11 @@ export default class StudentSummaryCard extends LightningElement {
         } else if (status === 'withdrawn') {
             return 'status-pill pill-withdrawn';
         }
-
         return 'status-pill pill-default';
     }
 
     get statusDotClass() {
         const status = (this.enrolmentStatus || '').toLowerCase();
-
         if (status === 'active' || status === 'enrolled') {
             return 'status-dot dot-green';
         } else if (status === 'offer accepted' || status === 'on leave') {
@@ -162,7 +108,6 @@ export default class StudentSummaryCard extends LightningElement {
         } else if (status === 'withdrawn') {
             return 'status-dot dot-red';
         }
-
         return 'status-dot dot-gray';
     }
 
@@ -171,49 +116,90 @@ export default class StudentSummaryCard extends LightningElement {
         return val != null ? Number(val).toFixed(2) : '0.00';
     }
 
+    get gpaBarClass() {
+        return 'metric-fill fill-orange';
+    }
+
     get formattedAttendance() {
         const att = this.studentData?.attendance;
         return att != null ? Number(att).toFixed(1) : '0.0';
+    }
+
+    get isAttendanceShortage() {
+        const att = this.studentData?.attendance;
+        return att != null && Number(att) < 75;
+    }
+
+    get attendanceCardClass() {
+        return this.isAttendanceShortage ? 'metric-card metric-amber' : 'metric-card metric-green';
+    }
+
+    get attendanceIconClass() {
+        return this.isAttendanceShortage ? 'metric-icon icon-amber' : 'metric-icon icon-green';
+    }
+
+    get attendanceTrackClass() {
+        return this.isAttendanceShortage ? 'metric-track track-amber' : 'metric-track track-green';
+    }
+
+    get attendanceBarClass() {
+        return this.isAttendanceShortage ? 'metric-fill fill-amber' : 'metric-fill fill-green';
     }
 
     get feeStatus() {
         return this.studentData?.feeStatus || 'Paid';
     }
 
+    get isFeeOverdue() {
+        return (this.feeStatus || '').toLowerCase() === 'overdue';
+    }
+
     get feeTileClass() {
         const status = (this.feeStatus || '').toLowerCase();
-
         if (status === 'paid') return 'metric-card fee-green';
         if (status === 'pending' || status === 'partially paid') return 'metric-card fee-orange';
         if (status === 'overdue') return 'metric-card fee-red';
-
         return 'metric-card fee-blue';
     }
 
     get feeSquircleClass() {
         const status = (this.feeStatus || '').toLowerCase();
-
         if (status === 'paid') return 'metric-icon icon-green';
         if (status === 'pending' || status === 'partially paid') return 'metric-icon icon-orange';
         if (status === 'overdue') return 'metric-icon icon-red';
-
         return 'metric-icon icon-blue';
     }
 
-    get feeValTextClass() {
+    get feePillClass() {
         const status = (this.feeStatus || '').toLowerCase();
+        if (status === 'paid') return 'fee-pill pill-paid';
+        if (status === 'overdue') return 'fee-pill pill-overdue';
+        return 'fee-pill pill-pending';
+    }
 
-        if (status === 'paid') return 'metric-value value-green';
-        if (status === 'pending' || status === 'partially paid') return 'metric-value value-orange';
-        if (status === 'overdue') return 'metric-value value-red';
-
-        return 'metric-value';
+    get feeSubtext() {
+        const status = (this.feeStatus || '').toLowerCase();
+        if (status === 'overdue') return '1 Pending';
+        if (status === 'paid') return 'All Paid';
+        return 'Pending';
     }
 
     get registeredCourseCount() {
         return this.studentData?.registeredCourseCount != null
             ? this.studentData.registeredCourseCount
             : (this.studentData?.registeredCourses?.length || 0);
+    }
+
+    get totalCreditsBadge() {
+        const credits = this.studentData?.totalRegisteredCredits;
+        if (credits != null && credits > 0) {
+            return `${Number(credits).toFixed(0)} Credits`;
+        }
+        return 'Active';
+    }
+
+    get courseBarClass() {
+        return 'metric-fill fill-blue';
     }
 
     get programName() {
@@ -248,7 +234,10 @@ export default class StudentSummaryCard extends LightningElement {
         return this.facultyAdvisorId ? `/${this.facultyAdvisorId}` : '#';
     }
 
-    get admissionDate() {
-        return this.studentData?.admissionDate;
+    get formattedAdmissionDate() {
+        const dateVal = this.studentData?.admissionDate;
+        if (!dateVal) return 'Not Set';
+        const d = new Date(dateVal);
+        return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     }
 }

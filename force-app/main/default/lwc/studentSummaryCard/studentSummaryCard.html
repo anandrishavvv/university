@@ -1,421 +1,255 @@
 <template>
-    <div class={wrapperClass}>
+    <div class="student-wrapper">
 
-        <!-- Top Profile & Institutional Banner (Shown in Compact and Full modes) -->
-        <template lwc:if={showTopBannerCard}>
-            <div class="student-header">
-                <!-- Panoramic Campus Building & Seal Banner -->
-                <img src={rgpvHeaderBannerUrl} class="header-campus-banner" alt="RGPV Campus & Seal" />
+        <!-- Top Profile & Institutional Banner -->
+        <div class="student-header">
+            <!-- Panoramic Campus Building & Seal Banner with Smooth Alpha Blend -->
+            <img src={rgpvHeaderBannerUrl} class="header-campus-banner" alt="RGPV Campus & Seal" />
 
-                <!-- Left: 3D Student Avatar & Identity Info -->
-                <div class="header-left">
-                    <div class="avatar">
-                        <img src={studentAvatarUrl} alt={studentName} class="avatar-image" />
-                    </div>
-
-                    <div class="student-identity">
-                        <h1 class="student-name" title={studentName}>
-                            {studentName}
-                        </h1>
-
-                        <span class="student-id">
-                            Student ID: {studentCode}
-                        </span>
-
-                        <div class={statusPillClass}>
-                            <span class={statusDotClass}></span>
-                            <span>{enrolmentStatus}</span>
-                        </div>
-                    </div>
+            <!-- Left: 3D Student Avatar & Identity Info -->
+            <div class="header-left">
+                <div class="avatar">
+                    <img src={studentAvatarUrl} alt={studentName} class="avatar-image" />
                 </div>
 
-                <!-- Far Right: Refresh Action Button -->
-                <div class="header-actions">
-                    <button
-                        class="refresh-btn"
-                        onclick={handleRefresh}
-                        title="Refresh Student Data">
-                        <lightning-icon
-                            icon-name="utility:refresh"
-                            size="small"
-                            class="refresh-icon">
-                        </lightning-icon>
-                    </button>
+                <div class="student-identity">
+                    <h1 class="student-name" title={studentName}>
+                        {studentName}
+                    </h1>
+
+                    <span class="student-id">
+                        Student ID: {studentCode}
+                    </span>
+
+                    <div class={statusPillClass}>
+                        <span class={statusDotClass}></span>
+                        <span>{enrolmentStatus}</span>
+                    </div>
                 </div>
             </div>
-        </template>
+
+            <!-- Far Right: Frosted Refresh Action Button -->
+            <div class="header-actions">
+                <button
+                    class="refresh-btn"
+                    onclick={handleRefresh}
+                    title="Refresh Student Data">
+                    <lightning-icon
+                        icon-name="utility:refresh"
+                        size="small"
+                        class="refresh-icon">
+                    </lightning-icon>
+                </button>
+            </div>
+        </div>
 
         <template lwc:if={isLoading}>
             <div class="loading-container">
-                <lightning-spinner
-                    alternative-text="Loading student data"
-                    size="medium">
-                </lightning-spinner>
+                <lightning-spinner alternative-text="Loading student data" size="medium"></lightning-spinner>
             </div>
         </template>
 
         <template lwc:elseif={errorMessage}>
             <div class="error-container">
-                <lightning-icon
-                    icon-name="utility:error"
-                    size="x-small"
-                    variant="inverse">
-                </lightning-icon>
+                <lightning-icon icon-name="utility:error" size="x-small" variant="inverse"></lightning-icon>
                 <span>{errorMessage}</span>
             </div>
         </template>
 
         <template lwc:else>
-            <template lwc:if={showDetailsSections}>
-                <div class="watermark-details-page" style={detailsPageStyle}>
-                    <!-- Subtle watermark logo image centered as decorative background element -->
-                    <div class="watermark-backdrop-container" aria-hidden="true">
-                        <img src={rgpvWatermarkBgUrl} alt="" class="watermark-backdrop-logo" />
-                    </div>
-
-                    <!-- Section 1: Academic Performance -->
-                    <section class="section academic-section">
-
-                <div class="section-heading">
-                    <div class="section-icon orange-icon">
-                        <lightning-icon
-                            icon-name="utility:education"
-                            size="small"
-                            class="white-icon">
-                        </lightning-icon>
-                    </div>
-
-                    <div class="section-title-area">
-                        <h2>Academic Performance</h2>
-                        <span>Student academic snapshot</span>
-                    </div>
-
-                    <div class="rgpv-brand">
-                        <img src={rgpvAcadWatermarkUrl} alt="RGPV watermark" class="brand-watermark-img" />
-                    </div>
+            <!-- Watermark Page Background Container -->
+            <div class="watermark-details-page">
+                <!-- Centered Dim RGPV Logo Watermark -->
+                <div class="watermark-backdrop-container" aria-hidden="true">
+                    <img src={rgpvWatermarkBgUrl} alt="" class="watermark-backdrop-logo" />
                 </div>
 
-                <div class="academic-grid">
-
-                    <!-- Metric 1: GPA -->
-                    <div class="metric-card metric-orange">
-                        <div class="metric-top">
-                            <div class="metric-icon icon-orange">
-                                <lightning-icon
-                                    icon-name="utility:award"
-                                    size="small"
-                                    class="white-icon">
-                                </lightning-icon>
-                            </div>
-
-                            <div class="metric-ghost ghost-orange" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <rect x="3" y="13" width="4" height="8" rx="1.4"></rect>
-                                    <rect x="10" y="8" width="4" height="13" rx="1.4"></rect>
-                                    <rect x="17" y="3" width="4" height="18" rx="1.4"></rect>
-                                    <polygon points="19,1 20.2,3.4 22.8,3.8 20.9,5.7 21.4,8.3 19,7 16.6,8.3 17.1,5.7 15.2,3.8 17.8,3.4" fill="#ea580c"></polygon>
-                                </svg>
-                            </div>
+                <!-- Section 1: Academic Performance -->
+                <section class="section academic-section">
+                    <div class="section-heading">
+                        <div class="section-icon orange-icon">
+                            <lightning-icon icon-name="utility:education" size="small" class="white-icon"></lightning-icon>
                         </div>
-
-                        <div class="metric-body">
-                            <span class="metric-label">GPA</span>
-                            <div class="metric-val-row">
-                                <span class="metric-primary-val">{formattedGpa}</span>
-                                <span class="metric-sub-val">/ 4.00</span>
-                            </div>
+                        <div class="section-title-area">
+                            <h2>Academic Performance</h2>
+                            <span>Student academic snapshot</span>
                         </div>
-
-                        <div class="metric-track track-orange">
-                            <div class={gpaBarClass}></div>
+                        <div class="verified-badge">
+                            <lightning-icon icon-name="utility:check" size="xx-small" class="verified-icon"></lightning-icon>
+                            <span>Verified</span>
                         </div>
                     </div>
 
-                    <!-- Metric 2: Attendance -->
-                    <div class="metric-card metric-green">
-                        <div class="metric-top">
-                            <div class="metric-icon icon-green">
-                                <lightning-icon
-                                    icon-name="utility:chart"
-                                    size="small"
-                                    class="white-icon">
-                                </lightning-icon>
+                    <div class="academic-grid">
+                        <!-- Metric 1: GPA -->
+                        <div class="metric-card metric-orange">
+                            <div class="metric-top">
+                                <div class="metric-icon icon-orange">
+                                    <lightning-icon icon-name="utility:award" size="small" class="white-icon"></lightning-icon>
+                                </div>
+                                <div class="metric-ghost ghost-orange" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <circle cx="12" cy="9" r="6" stroke="currentColor" stroke-width="1.5" fill="none"></circle>
+                                        <polyline points="9,14 7,22 12,19 17,22 15,14" fill="currentColor"></polyline>
+                                    </svg>
+                                </div>
                             </div>
-
-                            <div class="metric-ghost ghost-green" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="3,17 9,11 13,14 21,5"></polyline>
-                                    <polyline points="16,5 21,5 21,10"></polyline>
-                                </svg>
+                            <div class="metric-body">
+                                <span class="metric-label font-bold">GPA</span>
+                                <div class="metric-val-row">
+                                    <span class="metric-primary-val font-regular">{formattedGpa}</span>
+                                    <span class="metric-sub-val">/ 4.00</span>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="metric-body">
-                            <span class="metric-label">Attendance</span>
-                            <div class="metric-val-row">
-                                <span class="metric-primary-val">{formattedAttendance}%</span>
-                            </div>
-                        </div>
-
-                        <div class="metric-track track-green">
-                            <div class={attendanceBarClass}></div>
-                        </div>
-                    </div>
-
-                    <!-- Metric 3: Fee Status -->
-                    <div class={feeTileClass}>
-                        <div class="metric-top">
-                            <div class={feeSquircleClass}>
-                                <lightning-icon
-                                    icon-name="utility:money"
-                                    size="small"
-                                    class="white-icon">
-                                </lightning-icon>
-                            </div>
-
-                            <div class="metric-ghost ghost-amber" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <rect x="3" y="4" width="18" height="3" rx="1.5"></rect>
-                                    <rect x="3" y="9.5" width="13" height="3" rx="1.5"></rect>
-                                    <rect x="3" y="15" width="8" height="3" rx="1.5"></rect>
-                                </svg>
+                            <div class="metric-track track-orange">
+                                <div class={gpaBarClass}></div>
                             </div>
                         </div>
 
-                        <div class="metric-body">
-                            <span class="metric-label">Fee Status</span>
-                            <div class="metric-val-row">
-                                <span class={feeValTextClass}>{feeStatus}</span>
+                        <!-- Metric 2: Attendance -->
+                        <div class={attendanceCardClass}>
+                            <div class="metric-top">
+                                <div class={attendanceIconClass}>
+                                    <lightning-icon icon-name="utility:chart" size="small" class="white-icon"></lightning-icon>
+                                </div>
+                                <template lwc:if={isAttendanceShortage}>
+                                    <span class="shortage-chip">Shortage (&lt;75%)</span>
+                                </template>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Metric 4: Courses -->
-                    <div class="metric-card metric-blue">
-                        <div class="metric-top">
-                            <div class="metric-icon icon-blue">
-                                <lightning-icon
-                                    icon-name="utility:notebook"
-                                    size="small"
-                                    class="white-icon">
-                                </lightning-icon>
+                            <div class="metric-body">
+                                <span class="metric-label font-bold">Attendance</span>
+                                <div class="metric-val-row">
+                                    <span class="metric-primary-val font-regular">{formattedAttendance}%</span>
+                                </div>
                             </div>
-
-                            <div class="metric-ghost ghost-blue" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <polygon points="12,3 22,8 12,13 2,8"></polygon>
-                                    <polygon points="12,11 22,16 12,21 2,16" opacity="0.6"></polygon>
-                                </svg>
+                            <div class={attendanceTrackClass}>
+                                <div class={attendanceBarClass}></div>
                             </div>
                         </div>
 
-                        <div class="metric-body">
-                            <span class="metric-label">Courses</span>
-                            <div class="metric-val-row">
-                                <span class="metric-primary-val">{registeredCourseCount}</span>
-                                <span class="metric-sub-val">Active</span>
+                        <!-- Metric 3: Fee Status -->
+                        <div class={feeTileClass}>
+                            <div class="metric-top">
+                                <div class={feeSquircleClass}>
+                                    <lightning-icon icon-name="utility:money" size="small" class="white-icon"></lightning-icon>
+                                </div>
+                                <span class="subtext-muted">{feeSubtext}</span>
+                            </div>
+                            <div class="metric-body">
+                                <span class="metric-label font-bold">Fee Status</span>
+                                <div class="metric-val-row">
+                                    <span class={feePillClass}>{feeStatus}</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="metric-track track-blue">
-                            <div class={courseBarClass}></div>
+                        <!-- Metric 4: Courses -->
+                        <div class="metric-card metric-blue">
+                            <div class="metric-top">
+                                <div class="metric-icon icon-blue">
+                                    <lightning-icon icon-name="utility:notebook" size="small" class="white-icon"></lightning-icon>
+                                </div>
+                                <span class="credits-badge">{totalCreditsBadge}</span>
+                            </div>
+                            <div class="metric-body">
+                                <span class="metric-label font-bold">Courses</span>
+                                <div class="metric-val-row">
+                                    <span class="metric-primary-val font-regular">{registeredCourseCount}</span>
+                                    <span class="metric-sub-val">Active</span>
+                                </div>
+                            </div>
+                            <div class="metric-track track-blue">
+                                <div class={courseBarClass}></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Enrollment & Institutional Details -->
+                <section class="section institutional-section">
+                    <div class="section-heading">
+                        <div class="section-icon purple-icon">
+                            <lightning-icon icon-name="utility:company" size="small" class="white-icon"></lightning-icon>
+                        </div>
+                        <div class="section-title-area">
+                            <h2>Enrollment & Institutional Details</h2>
+                            <span>Program and academic information</span>
                         </div>
                     </div>
 
-                </div>
-            </section>
+                    <div class="details-grid">
+                        <!-- Program -->
+                        <div class="detail-card detail-card-full tint-coral">
+                            <div class="detail-icon icon-coral">
+                                <lightning-icon icon-name="utility:layers" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label font-bold">Program</span>
+                                <template lwc:if={programId}>
+                                    <a href={programUrl} class="detail-value font-regular link value-program" title={programName}>{programName}</a>
+                                </template>
+                                <template lwc:else>
+                                    <span class="detail-value font-regular value-program" title={programName}>{programName}</span>
+                                </template>
+                            </div>
+                            <lightning-icon icon-name="utility:education" size="small" class="detail-ghost ghost-coral"></lightning-icon>
+                        </div>
 
-            <!-- Section 2: Enrollment & Institutional Details -->
-            <section class="section institutional-section">
+                        <!-- Department -->
+                        <div class="detail-card detail-card-half tint-blue">
+                            <div class="detail-icon icon-blue">
+                                <lightning-icon icon-name="utility:knowledge_base" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label font-bold">Department</span>
+                                <span class="detail-value font-regular" title={department}>{department}</span>
+                            </div>
+                            <lightning-icon icon-name="utility:company" size="small" class="detail-ghost ghost-blue"></lightning-icon>
+                        </div>
 
-                <div class="section-heading">
-                    <div class="section-icon purple-icon">
-                        <lightning-icon
-                            icon-name="utility:company"
-                            size="small"
-                            class="white-icon">
-                        </lightning-icon>
+                        <!-- Current Semester -->
+                        <div class="detail-card detail-card-half tint-amber">
+                            <div class="detail-icon icon-amber">
+                                <lightning-icon icon-name="utility:event" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label font-bold">Current Semester</span>
+                                <span class="detail-value font-regular">{semester}</span>
+                            </div>
+                            <lightning-icon icon-name="utility:notebook" size="small" class="detail-ghost ghost-amber"></lightning-icon>
+                        </div>
+
+                        <!-- Faculty Advisor -->
+                        <div class="detail-card detail-card-full tint-purple">
+                            <div class="detail-icon icon-purple">
+                                <lightning-icon icon-name="utility:user" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label font-bold">Faculty Advisor</span>
+                                <template lwc:if={facultyAdvisorId}>
+                                    <a href={facultyAdvisorUrl} class="detail-value font-regular link value-advisor" title={facultyAdvisorName}>{facultyAdvisorName}</a>
+                                </template>
+                                <template lwc:else>
+                                    <span class="detail-value font-regular value-advisor" title={facultyAdvisorName}>{facultyAdvisorName}</span>
+                                </template>
+                            </div>
+                            <lightning-icon icon-name="utility:user_group" size="small" class="detail-ghost ghost-purple"></lightning-icon>
+                        </div>
+
+                        <!-- Admission Date -->
+                        <div class="detail-card detail-card-full tint-green">
+                            <div class="detail-icon icon-green">
+                                <lightning-icon icon-name="utility:date_time" size="small" class="white-icon"></lightning-icon>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label font-bold">Admission Date</span>
+                                <span class="detail-value font-regular">{formattedAdmissionDate}</span>
+                            </div>
+                            <lightning-icon icon-name="utility:event" size="small" class="detail-ghost ghost-green"></lightning-icon>
+                        </div>
                     </div>
-
-                    <div class="section-title-area">
-                        <h2>Enrollment & Institutional Details</h2>
-                        <span>Program and academic information</span>
-                    </div>
-
-                    <div class="rgpv-brand">
-                        <img src={rgpvInstWatermarkUrl} alt="RGPV watermark" class="brand-watermark-img" />
-                    </div>
-                </div>
-
-                <div class="details-grid">
-
-                    <!-- Program -->
-                    <div class="detail-card detail-card-3col tint-coral">
-                        <div class="detail-icon icon-coral">
-                            <lightning-icon
-                                icon-name="utility:layers"
-                                size="small"
-                                class="white-icon">
-                            </lightning-icon>
-                        </div>
-
-                        <div class="detail-content">
-                            <span class="detail-label">Program</span>
-
-                            <template lwc:if={programId}>
-                                <a
-                                    href={programUrl}
-                                    class="detail-value link value-program"
-                                    title={programName}>
-                                    {programName}
-                                </a>
-                            </template>
-
-                            <template lwc:else>
-                                <span
-                                    class="detail-value value-program"
-                                    title={programName}>
-                                    {programName}
-                                </span>
-                            </template>
-                        </div>
-
-                        <lightning-icon
-                            icon-name="utility:education"
-                            size="small"
-                            class="detail-ghost ghost-coral">
-                        </lightning-icon>
-                    </div>
-
-                    <!-- Department -->
-                    <div class="detail-card detail-card-3col tint-blue">
-                        <div class="detail-icon icon-blue">
-                            <lightning-icon
-                                icon-name="utility:knowledge_base"
-                                size="small"
-                                class="white-icon">
-                            </lightning-icon>
-                        </div>
-
-                        <div class="detail-content">
-                            <span class="detail-label">Department</span>
-                            <span
-                                class="detail-value"
-                                title={department}>
-                                {department}
-                            </span>
-                        </div>
-
-                        <lightning-icon
-                            icon-name="utility:company"
-                            size="small"
-                            class="detail-ghost ghost-blue">
-                        </lightning-icon>
-                    </div>
-
-                    <!-- Current Semester -->
-                    <div class="detail-card detail-card-3col tint-amber">
-                        <div class="detail-icon icon-amber">
-                            <lightning-icon
-                                icon-name="utility:event"
-                                size="small"
-                                class="white-icon">
-                            </lightning-icon>
-                        </div>
-
-                        <div class="detail-content">
-                            <span class="detail-label">Current Semester</span>
-                            <span class="detail-value">
-                                {semester}
-                            </span>
-                        </div>
-
-                        <lightning-icon
-                            icon-name="utility:notebook"
-                            size="small"
-                            class="detail-ghost ghost-amber">
-                        </lightning-icon>
-                    </div>
-
-                    <!-- Faculty Advisor -->
-                    <div class="detail-card detail-card-2col tint-purple">
-                        <div class="detail-icon icon-purple">
-                            <lightning-icon
-                                icon-name="utility:user"
-                                size="small"
-                                class="white-icon">
-                            </lightning-icon>
-                        </div>
-
-                        <div class="detail-content">
-                            <span class="detail-label">Faculty Advisor</span>
-
-                            <template lwc:if={facultyAdvisorId}>
-                                <a
-                                    href={facultyAdvisorUrl}
-                                    class="detail-value link value-advisor"
-                                    title={facultyAdvisorName}>
-                                    {facultyAdvisorName}
-                                </a>
-                            </template>
-
-                            <template lwc:else>
-                                <span
-                                    class="detail-value value-advisor"
-                                    title={facultyAdvisorName}>
-                                    {facultyAdvisorName}
-                                </span>
-                            </template>
-                        </div>
-
-                        <lightning-icon
-                            icon-name="utility:user_group"
-                            size="small"
-                            class="detail-ghost ghost-purple">
-                        </lightning-icon>
-                    </div>
-
-                    <!-- Admission Date -->
-                    <div class="detail-card detail-card-2col tint-green">
-                        <div class="detail-icon icon-green">
-                            <lightning-icon
-                                icon-name="utility:date_time"
-                                size="small"
-                                class="white-icon">
-                            </lightning-icon>
-                        </div>
-
-                        <div class="detail-content">
-                            <span class="detail-label">Admission Date</span>
-
-                            <template lwc:if={admissionDate}>
-                                <lightning-formatted-date-time
-                                    value={admissionDate}
-                                    year="numeric"
-                                    month="short"
-                                    day="2-digit"
-                                    class="detail-value">
-                                </lightning-formatted-date-time>
-                            </template>
-
-                            <template lwc:else>
-                                <span class="detail-value">
-                                    Not Set
-                                </span>
-                            </template>
-                        </div>
-
-                        <lightning-icon
-                            icon-name="utility:event"
-                            size="small"
-                            class="detail-ghost ghost-green">
-                        </lightning-icon>
-                    </div>
-
-                </div>
-            </section>
-        </div>
-    </template>
-</template>
-</div>
+                </section>
+            </div>
+        </template>
+    </div>
 </template>
