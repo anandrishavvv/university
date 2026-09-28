@@ -218,7 +218,8 @@ public with sharing class StudentSummaryController {
 
                 dto.registeredCourses.add(cw);
 
-                if (enr.Enrolment_Status__c == 'Registered' || enr.Enrolment_Status__c == 'Active') {
+                String status = String.isNotBlank(enr.Enrolment_Status__c) ? enr.Enrolment_Status__c.toLowerCase() : '';
+                if (status != 'dropped' && status != 'withdrawn' && status != 'cancelled') {
                     activeRegisteredCount++;
                     if (cw.credits != null) {
                         totalCredits += cw.credits;

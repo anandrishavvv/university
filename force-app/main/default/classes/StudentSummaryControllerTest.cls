@@ -19,7 +19,7 @@ private class StudentSummaryControllerTest {
             Program__c = prog.Id,
             Cumulative_GPA__c = 3.85,
             Enrolment_Status__c = 'Active',
-            Academic_Standing__c = 'Dean\'s List',
+            Academic_Standing__c = 'Good Standing',
             Email__c = 'alex.morgan@university.edu',
             Phone__c = '+1-555-0199'
         );
@@ -45,7 +45,7 @@ private class StudentSummaryControllerTest {
             Course_Code__c = 'CS-201',
             Course_Name__c = 'Data Structures & Algorithms',
             Credits__c = 4,
-            Term__c = 'Spring 2026',
+            Term__c = 'Fall 2026',
             Max_Capacity__c = 50,
             Is_Open_For_Registration__c = true
         );
@@ -54,7 +54,7 @@ private class StudentSummaryControllerTest {
             Course_Code__c = 'CS-202',
             Course_Name__c = 'Database Systems',
             Credits__c = 3,
-            Term__c = 'Spring 2026',
+            Term__c = 'Fall 2026',
             Max_Capacity__c = 50,
             Is_Open_For_Registration__c = true
         );
@@ -84,14 +84,14 @@ private class StudentSummaryControllerTest {
                 Due_Date__c = Date.today().addDays(-30),
                 Payment_Date__c = Date.today().addDays(-35),
                 Payment_Status__c = 'Paid',
-                Term__c = 'Fall 2025'
+                Term__c = 'Fall 2026'
             );
             Fee_Invoice__c fee2 = new Fee_Invoice__c(
                 Student__c = stu.Id,
                 Gross_Amount__c = 5000,
                 Due_Date__c = Date.today().addDays(15),
                 Payment_Status__c = 'Pending',
-                Term__c = 'Spring 2026'
+                Term__c = 'Fall 2026'
             );
             insert new List<Fee_Invoice__c>{ fee1, fee2 };
         } catch (Exception ex) {
