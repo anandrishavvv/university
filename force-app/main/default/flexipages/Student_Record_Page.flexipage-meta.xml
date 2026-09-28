@@ -179,6 +179,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>displayMode</name>
+                    <value>Details</value>
+                </componentInstanceProperties>
                 <componentName>studentSummaryCard</componentName>
                 <identifier>c_studentSummaryCard</identifier>
             </componentInstance>
@@ -385,6 +389,16 @@
         <type>Facet</type>
     </flexiPageRegions>
     <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>displayMode</name>
+                    <value>Compact</value>
+                </componentInstanceProperties>
+                <componentName>studentSummaryCard</componentName>
+                <identifier>c_studentSummaryCard_compact</identifier>
+            </componentInstance>
+        </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>

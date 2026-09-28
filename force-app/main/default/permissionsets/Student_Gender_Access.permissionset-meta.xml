@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Grants read and edit access to Student Gender field.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Student Gender Access</label>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Student__c.Gender__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+</PermissionSet>

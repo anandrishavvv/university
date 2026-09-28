@@ -52,6 +52,7 @@ public with sharing class StudentSummaryController {
         @AuraEnabled public String phone { get; set; }
         @AuraEnabled public String academicStanding { get; set; }
         @AuraEnabled public Date expectedGraduationDate { get; set; }
+        @AuraEnabled public String gender { get; set; }
         @AuraEnabled public List<CourseWrapper> registeredCourses { get; set; }
         @AuraEnabled public List<FeeInvoiceWrapper> feeInvoices { get; set; }
         @AuraEnabled public Decimal totalFeeOutstanding { get; set; }
@@ -94,6 +95,9 @@ public with sharing class StudentSummaryController {
         }
         if (fieldMap.containsKey('registered_courses_count__c')) {
             selectFields.add('Registered_Courses_Count__c');
+        }
+        if (fieldMap.containsKey('gender__c')) {
+            selectFields.add('Gender__c');
         }
 
         // Subquery for enrolments and fee invoices
@@ -138,6 +142,11 @@ public with sharing class StudentSummaryController {
         dto.enrolmentStatus = String.isNotBlank(student.Enrolment_Status__c) ? student.Enrolment_Status__c : 'Active';
         dto.academicStanding = String.isNotBlank(student.Academic_Standing__c) ? student.Academic_Standing__c : 'Good Standing';
         dto.expectedGraduationDate = student.Expected_Graduation_Date__c;
+
+        // Gender (safe dynamic extraction)
+        if (fieldMap.containsKey('gender__c') && student.get('Gender__c') != null) {
+            dto.gender = String.valueOf(student.get('Gender__c'));
+        }
 
         // Admission Date (safe dynamic extraction)
         if (fieldMap.containsKey('admission_date__c') && student.get('Admission_Date__c') != null) {

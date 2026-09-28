@@ -1,47 +1,49 @@
 <template>
-    <div class="student-wrapper">
+    <div class={wrapperClass}>
 
-        <!-- Top Profile & Institutional Banner -->
-        <div class="student-header">
-            <!-- Panoramic Campus Building & Seal Banner -->
-            <img src={rgpvHeaderBannerUrl} class="header-campus-banner" alt="RGPV Campus & Seal" />
+        <!-- Top Profile & Institutional Banner (Shown in Compact and Full modes) -->
+        <template lwc:if={showTopBannerCard}>
+            <div class="student-header">
+                <!-- Panoramic Campus Building & Seal Banner -->
+                <img src={rgpvHeaderBannerUrl} class="header-campus-banner" alt="RGPV Campus & Seal" />
 
-            <!-- Left: 3D Student Avatar & Identity Info -->
-            <div class="header-left">
-                <div class="avatar">
-                    <img src={studentAvatarUrl} alt={studentName} class="avatar-image" />
-                </div>
+                <!-- Left: 3D Student Avatar & Identity Info -->
+                <div class="header-left">
+                    <div class="avatar">
+                        <img src={studentAvatarUrl} alt={studentName} class="avatar-image" />
+                    </div>
 
-                <div class="student-identity">
-                    <h1 class="student-name" title={studentName}>
-                        {studentName}
-                    </h1>
+                    <div class="student-identity">
+                        <h1 class="student-name" title={studentName}>
+                            {studentName}
+                        </h1>
 
-                    <span class="student-id">
-                        Student ID: {studentCode}
-                    </span>
+                        <span class="student-id">
+                            Student ID: {studentCode}
+                        </span>
 
-                    <div class={statusPillClass}>
-                        <span class={statusDotClass}></span>
-                        <span>{enrolmentStatus}</span>
+                        <div class={statusPillClass}>
+                            <span class={statusDotClass}></span>
+                            <span>{enrolmentStatus}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Far Right: Refresh Action Button -->
-            <div class="header-actions">
-                <button
-                    class="refresh-btn"
-                    onclick={handleRefresh}
-                    title="Refresh Student Data">
-                    <lightning-icon
-                        icon-name="utility:refresh"
-                        size="small"
-                        class="refresh-icon">
-                    </lightning-icon>
-                </button>
+                <!-- Far Right: Refresh Action Button -->
+                <div class="header-actions">
+                    <button
+                        class="refresh-btn"
+                        onclick={handleRefresh}
+                        title="Refresh Student Data">
+                        <lightning-icon
+                            icon-name="utility:refresh"
+                            size="small"
+                            class="refresh-icon">
+                        </lightning-icon>
+                    </button>
+                </div>
             </div>
-        </div>
+        </template>
 
         <template lwc:if={isLoading}>
             <div class="loading-container">
@@ -64,9 +66,15 @@
         </template>
 
         <template lwc:else>
+            <template lwc:if={showDetailsSections}>
+                <div class="watermark-details-page" style={detailsPageStyle}>
+                    <!-- Subtle watermark logo image centered as decorative background element -->
+                    <div class="watermark-backdrop-container" aria-hidden="true">
+                        <img src={rgpvWatermarkBgUrl} alt="" class="watermark-backdrop-logo" />
+                    </div>
 
-            <!-- Section 1: Academic Performance -->
-            <section class="section academic-section">
+                    <!-- Section 1: Academic Performance -->
+                    <section class="section academic-section">
 
                 <div class="section-heading">
                     <div class="section-icon orange-icon">
@@ -406,7 +414,8 @@
 
                 </div>
             </section>
-
-        </template>
-    </div>
+        </div>
+    </template>
+</template>
+</div>
 </template>

@@ -14,6 +14,7 @@
             <objects>
                 <object>Student__c</object>
             </objects>
+            <property name="displayMode" type="String" default="Full" label="Display Mode" description="Display layout mode: 'Compact' (profile banner card above tabs), 'Details' (watermarked academic &amp; enrollment details), or 'Full' (both)." datasource="Full,Compact,Details"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

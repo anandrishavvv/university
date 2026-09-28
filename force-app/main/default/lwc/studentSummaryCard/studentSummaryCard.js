@@ -5,11 +5,38 @@ import RGPV_ASSETS from '@salesforce/resourceUrl/RGPVAssets';
 
 export default class StudentSummaryCard extends LightningElement {
     @api recordId;
+    @api displayMode = 'Full'; // 'Full', 'Compact', 'Details'
 
     studentData;
     errorMessage;
     isLoading = true;
     wiredStudentResult;
+
+    get isCompactMode() {
+        return (this.displayMode || '').toLowerCase() === 'compact';
+    }
+
+    get isDetailsMode() {
+        return (this.displayMode || '').toLowerCase() === 'details';
+    }
+
+    get showTopBannerCard() {
+        return !this.isDetailsMode;
+    }
+
+    get showDetailsSections() {
+        return !this.isCompactMode;
+    }
+
+    get wrapperClass() {
+        if (this.isCompactMode) {
+            return 'student-wrapper compact-wrapper';
+        }
+        if (this.isDetailsMode) {
+            return 'student-wrapper details-wrapper';
+        }
+        return 'student-wrapper full-wrapper';
+    }
 
     get rgpvLogoUrl() {
         return `${RGPV_ASSETS}/logo/rgpv-logo.png`;
@@ -24,7 +51,27 @@ export default class StudentSummaryCard extends LightningElement {
     }
 
     get studentAvatarUrl() {
-        return `${RGPV_ASSETS}/avatar/student-avatar.png`;
+        const gender = (this.studentData?.gender || '').toLowerCase();
+        if (gender === 'female') {
+            return `${RGPV_ASSETS}/avatar/student-avatar-female-circle.png`;
+        }
+        if (gender === 'male') {
+            return `${RGPV_ASSETS}/avatar/student-avatar-male-circle.png`;
+        }
+        // Fallback heuristic for female names
+        const name = (this.studentName || '').toLowerCase();
+        if (name.includes('ananya') || name.includes('priya') || name.includes('neha') || name.includes('pooja') || name.includes('shreya') || name.includes('aditi')) {
+            return `${RGPV_ASSETS}/avatar/student-avatar-female-circle.png`;
+        }
+        return `${RGPV_ASSETS}/avatar/student-avatar-male-circle.png`;
+    }
+
+    get rgpvWatermarkBgUrl() {
+        return `${RGPV_ASSETS}/watermarks/rgpv-watermark-bg.png`;
+    }
+
+    get detailsPageStyle() {
+        return `background-image: url('${this.rgpvWatermarkBgUrl}');`;
     }
 
     get rgpvAcadWatermarkUrl() {
