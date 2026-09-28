@@ -202,6 +202,34 @@ export default class StudentSummaryCard extends LightningElement {
         return 'metric-fill fill-blue';
     }
 
+    get primaryCourseDisplay() {
+        const courses = this.studentData?.registeredCourses;
+        if (!courses || courses.length === 0) {
+            return null;
+        }
+        const first = courses[0];
+        const code = first.courseCode || '';
+        const name = first.courseName || '';
+        let label = '';
+        if (code && name) {
+            label = `${code} · ${name}`;
+        } else {
+            label = name || code || 'Enrolled Course';
+        }
+        if (courses.length > 1) {
+            label += ` (+${courses.length - 1} more)`;
+        }
+        return label;
+    }
+
+    get primaryCourseTooltip() {
+        const courses = this.studentData?.registeredCourses;
+        if (!courses || courses.length === 0) return '';
+        return courses
+            .map(c => `${c.courseCode || ''} ${c.courseName || ''} (${c.credits || 0} Credits)`)
+            .join('\n');
+    }
+
     get programName() {
         return this.studentData?.programName || 'Not Assigned';
     }

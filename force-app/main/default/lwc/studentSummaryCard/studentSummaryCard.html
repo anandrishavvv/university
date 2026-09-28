@@ -157,6 +157,12 @@
                                     <span class="metric-primary-val font-regular">{registeredCourseCount}</span>
                                     <span class="metric-sub-val">Active</span>
                                 </div>
+                                <template lwc:if={primaryCourseDisplay}>
+                                    <div class="course-mini-chip" title={primaryCourseTooltip}>
+                                        <span class="course-chip-dot">▪</span>
+                                        <span class="course-chip-text">{primaryCourseDisplay}</span>
+                                    </div>
+                                </template>
                             </div>
                             <div class="metric-track track-blue">
                                 <div class={courseBarClass}></div>
