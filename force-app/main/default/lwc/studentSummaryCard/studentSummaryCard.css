@@ -197,11 +197,13 @@
 }
 
 .watermark-backdrop-logo {
-    max-width: 330px;
-    max-height: 330px;
+    max-width: 320px;
+    max-height: 320px;
+    width: 290px;
+    height: 290px;
     object-fit: contain;
-    opacity: 0.11;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.04));
+    opacity: 0.15;
+    filter: saturate(115%) contrast(105%);
 }
 
 .section {
@@ -211,10 +213,10 @@
     margin-top: 10px;
     padding: 11px 12px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.78);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(255, 255, 255, 0.92);
     box-shadow:
         0 8px 20px rgba(35, 48, 70, 0.05),
         0 2px 4px rgba(35, 48, 70, 0.03),
@@ -222,11 +224,11 @@
 }
 
 .academic-section {
-    background: linear-gradient(135deg, rgba(255, 252, 249, 0.94), rgba(255, 255, 255, 0.91));
+    background: linear-gradient(135deg, rgba(255, 252, 249, 0.80), rgba(255, 255, 255, 0.74));
 }
 
 .institutional-section {
-    background: linear-gradient(135deg, rgba(250, 248, 255, 0.94), rgba(255, 255, 255, 0.91));
+    background: linear-gradient(135deg, rgba(250, 248, 255, 0.80), rgba(255, 255, 255, 0.74));
 }
 
 .section-heading {
@@ -318,6 +320,8 @@
     border-radius: 14px;
     border: 1px solid;
     box-sizing: border-box;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     box-shadow:
         0 4px 10px rgba(40, 50, 70, 0.04),
         inset 0 1px 1px rgba(255, 255, 255, 0.9);
@@ -332,43 +336,43 @@
 }
 
 .metric-orange {
-    background: linear-gradient(145deg, #fff8f4, #fff1ea);
-    border-color: #ffd8c4;
+    background: linear-gradient(145deg, rgba(255, 248, 244, 0.82), rgba(255, 241, 234, 0.76));
+    border-color: rgba(255, 216, 196, 0.9);
 }
 
 .metric-green {
-    background: linear-gradient(145deg, #f4fff8, #eafbf0);
-    border-color: #c4ebd2;
+    background: linear-gradient(145deg, rgba(244, 255, 248, 0.82), rgba(234, 251, 240, 0.76));
+    border-color: rgba(196, 235, 210, 0.9);
 }
 
 .metric-amber {
-    background: linear-gradient(145deg, #fffcf4, #fff8ec);
-    border-color: #fae4be;
+    background: linear-gradient(145deg, rgba(255, 252, 244, 0.82), rgba(255, 248, 236, 0.76));
+    border-color: rgba(250, 228, 190, 0.9);
 }
 
 .fee-orange {
-    background: linear-gradient(145deg, #fffcf4, #fff6e4);
-    border-color: #fae7ba;
+    background: linear-gradient(145deg, rgba(255, 252, 244, 0.82), rgba(255, 246, 228, 0.76));
+    border-color: rgba(250, 231, 186, 0.9);
 }
 
 .fee-red {
-    background: linear-gradient(145deg, #fff5f5, #ffecee);
-    border-color: #fccfcf;
+    background: linear-gradient(145deg, rgba(255, 245, 245, 0.82), rgba(255, 236, 238, 0.76));
+    border-color: rgba(252, 207, 207, 0.9);
 }
 
 .fee-green {
-    background: linear-gradient(145deg, #f4fff8, #eafbf0);
-    border-color: #c4ebd2;
+    background: linear-gradient(145deg, rgba(244, 255, 248, 0.82), rgba(234, 251, 240, 0.76));
+    border-color: rgba(196, 235, 210, 0.9);
 }
 
 .fee-blue {
-    background: linear-gradient(145deg, #f4f8ff, #eaf2ff);
-    border-color: #ccdeff;
+    background: linear-gradient(145deg, rgba(244, 248, 255, 0.82), rgba(234, 242, 255, 0.76));
+    border-color: rgba(204, 222, 255, 0.9);
 }
 
 .metric-blue {
-    background: linear-gradient(145deg, #f4f8ff, #eaf2ff);
-    border-color: #ccdeff;
+    background: linear-gradient(145deg, rgba(244, 248, 255, 0.82), rgba(234, 242, 255, 0.76));
+    border-color: rgba(204, 222, 255, 0.9);
 }
 
 .metric-top {
@@ -572,6 +576,8 @@
     border-radius: 13px;
     border: 1px solid;
     box-sizing: border-box;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     box-shadow:
         0 3px 8px rgba(0, 0, 0, 0.03),
         inset 0 1px 1px rgba(255, 255, 255, 0.9);
@@ -586,28 +592,28 @@
 }
 
 .tint-coral {
-    background: linear-gradient(145deg, #fff7f4, #ffefe9);
-    border-color: #ffd8cb;
+    background: linear-gradient(145deg, rgba(255, 247, 244, 0.82), rgba(255, 239, 233, 0.76));
+    border-color: rgba(255, 216, 203, 0.9);
 }
 
 .tint-blue {
-    background: linear-gradient(145deg, #f4f8ff, #eaf2ff);
-    border-color: #ccdeff;
+    background: linear-gradient(145deg, rgba(244, 248, 255, 0.82), rgba(234, 242, 255, 0.76));
+    border-color: rgba(204, 222, 255, 0.9);
 }
 
 .tint-amber {
-    background: linear-gradient(145deg, #fffcf3, #fff8e6);
-    border-color: #fae8be;
+    background: linear-gradient(145deg, rgba(255, 252, 243, 0.82), rgba(255, 248, 230, 0.76));
+    border-color: rgba(250, 232, 190, 0.9);
 }
 
 .tint-purple {
-    background: linear-gradient(145deg, #faf6ff, #f2eaff);
-    border-color: #e5d6ff;
+    background: linear-gradient(145deg, rgba(250, 246, 255, 0.82), rgba(242, 234, 255, 0.76));
+    border-color: rgba(229, 214, 255, 0.9);
 }
 
 .tint-green {
-    background: linear-gradient(145deg, #f4fff7, #e8faef);
-    border-color: #bcf0ce;
+    background: linear-gradient(145deg, rgba(244, 255, 247, 0.82), rgba(232, 250, 239, 0.76));
+    border-color: rgba(188, 240, 206, 0.9);
 }
 
 .icon-coral {
