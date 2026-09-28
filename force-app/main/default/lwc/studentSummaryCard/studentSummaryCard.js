@@ -17,7 +17,7 @@ export default class StudentSummaryCard extends LightningElement {
     }
 
     get rgpvCampusUrl() {
-        return `${RGPV_ASSETS}/campus/rgpv-campus.jpg`;
+        return `${RGPV_ASSETS}/campus/rgpv-campus-banner.png`;
     }
 
     get rgpvHeaderBannerUrl() {
