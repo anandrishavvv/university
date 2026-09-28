@@ -1,6 +1,7 @@
 import { LightningElement, api, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 import getStudentSummary from '@salesforce/apex/StudentSummaryController.getStudentSummary';
+import RGPV_ASSETS from '@salesforce/resourceUrl/RGPVAssets';
 
 export default class StudentSummaryCard extends LightningElement {
     @api recordId;
@@ -9,6 +10,38 @@ export default class StudentSummaryCard extends LightningElement {
     errorMessage;
     isLoading = true;
     wiredStudentResult;
+
+    get rgpvLogoUrl() {
+        return `${RGPV_ASSETS}/logo/rgpv-logo.png`;
+    }
+
+    get rgpvCampusUrl() {
+        return `${RGPV_ASSETS}/campus/rgpv-campus.jpg`;
+    }
+
+    get studentAvatarUrl() {
+        return `${RGPV_ASSETS}/avatar/student-avatar.png`;
+    }
+
+    get rgpvAcadWatermarkUrl() {
+        return `${RGPV_ASSETS}/watermarks/acad-watermark.png`;
+    }
+
+    get rgpvInstWatermarkUrl() {
+        return `${RGPV_ASSETS}/watermarks/inst-watermark.png`;
+    }
+
+    get gpaBarClass() {
+        return 'metric-fill fill-orange';
+    }
+
+    get attendanceBarClass() {
+        return 'metric-fill fill-green';
+    }
+
+    get courseBarClass() {
+        return 'metric-fill fill-blue';
+    }
 
     @wire(getStudentSummary, { studentId: '$recordId' })
     wiredSummary(result) {
@@ -28,6 +61,7 @@ export default class StudentSummaryCard extends LightningElement {
 
     async handleRefresh() {
         this.isLoading = true;
+
         try {
             await refreshApex(this.wiredStudentResult);
         } catch (e) {
@@ -37,23 +71,21 @@ export default class StudentSummaryCard extends LightningElement {
         }
     }
 
-    // 1. Student Name
     get studentName() {
         return this.studentData?.studentName || 'Student Name';
     }
 
-    // 2. Student ID (UHID style)
     get studentCode() {
         return this.studentData?.studentCode || 'N/A';
     }
 
-    // 3. Enrolment Status
     get enrolmentStatus() {
         return this.studentData?.enrolmentStatus || 'Active';
     }
 
     get statusPillClass() {
         const status = (this.enrolmentStatus || '').toLowerCase();
+
         if (status === 'active' || status === 'enrolled') {
             return 'status-pill pill-active';
         } else if (status === 'offer accepted' || status === 'on leave') {
@@ -63,11 +95,13 @@ export default class StudentSummaryCard extends LightningElement {
         } else if (status === 'withdrawn') {
             return 'status-pill pill-withdrawn';
         }
+
         return 'status-pill pill-default';
     }
 
     get statusDotClass() {
         const status = (this.enrolmentStatus || '').toLowerCase();
+
         if (status === 'active' || status === 'enrolled') {
             return 'status-dot dot-green';
         } else if (status === 'offer accepted' || status === 'on leave') {
@@ -77,66 +111,60 @@ export default class StudentSummaryCard extends LightningElement {
         } else if (status === 'withdrawn') {
             return 'status-dot dot-red';
         }
+
         return 'status-dot dot-gray';
     }
 
-    // 4. Cumulative GPA
     get formattedGpa() {
         const val = this.studentData?.gpa;
         return val != null ? Number(val).toFixed(2) : '0.00';
     }
 
-    // 5. Attendance
     get formattedAttendance() {
         const att = this.studentData?.attendance;
         return att != null ? Number(att).toFixed(1) : '0.0';
     }
 
-    // 6. Fee Status
     get feeStatus() {
         return this.studentData?.feeStatus || 'Paid';
     }
 
     get feeTileClass() {
         const status = (this.feeStatus || '').toLowerCase();
-        if (status === 'paid') return 'metric-tile tile-emerald';
-        if (status === 'pending' || status === 'partially paid') return 'metric-tile tile-amber';
-        if (status === 'overdue') return 'metric-tile tile-rose';
-        return 'metric-tile tile-blue';
+
+        if (status === 'paid') return 'metric-card fee-green';
+        if (status === 'pending' || status === 'partially paid') return 'metric-card fee-orange';
+        if (status === 'overdue') return 'metric-card fee-red';
+
+        return 'metric-card fee-blue';
     }
 
     get feeSquircleClass() {
         const status = (this.feeStatus || '').toLowerCase();
-        if (status === 'paid') return 'tile-icon-squircle squircle-emerald';
-        if (status === 'pending' || status === 'partially paid') return 'tile-icon-squircle squircle-amber';
-        if (status === 'overdue') return 'tile-icon-squircle squircle-rose';
-        return 'tile-icon-squircle squircle-blue';
+
+        if (status === 'paid') return 'metric-icon icon-green';
+        if (status === 'pending' || status === 'partially paid') return 'metric-icon icon-orange';
+        if (status === 'overdue') return 'metric-icon icon-red';
+
+        return 'metric-icon icon-blue';
     }
 
     get feeValTextClass() {
         const status = (this.feeStatus || '').toLowerCase();
-        if (status === 'paid') return 'tile-primary-val text-emerald';
-        if (status === 'pending' || status === 'partially paid') return 'tile-primary-val text-amber';
-        if (status === 'overdue') return 'tile-primary-val text-rose';
-        return 'tile-primary-val';
+
+        if (status === 'paid') return 'metric-value value-green';
+        if (status === 'pending' || status === 'partially paid') return 'metric-value value-orange';
+        if (status === 'overdue') return 'metric-value value-red';
+
+        return 'metric-value';
     }
 
-    get feeBarClass() {
-        const status = (this.feeStatus || '').toLowerCase();
-        if (status === 'paid') return 'bottom-accent-bar bar-emerald';
-        if (status === 'pending' || status === 'partially paid') return 'bottom-accent-bar bar-amber';
-        if (status === 'overdue') return 'bottom-accent-bar bar-rose';
-        return 'bottom-accent-bar bar-blue';
-    }
-
-    // 7. Registered Courses Count
     get registeredCourseCount() {
         return this.studentData?.registeredCourseCount != null
             ? this.studentData.registeredCourseCount
             : (this.studentData?.registeredCourses?.length || 0);
     }
 
-    // 8. Program
     get programName() {
         return this.studentData?.programName || 'Not Assigned';
     }
@@ -149,17 +177,14 @@ export default class StudentSummaryCard extends LightningElement {
         return this.programId ? `/${this.programId}` : '#';
     }
 
-    // 9. Department
     get department() {
         return this.studentData?.department || 'General Academic';
     }
 
-    // 10. Semester
     get semester() {
         return this.studentData?.semester || 'Semester 1';
     }
 
-    // 11. Faculty Advisor
     get facultyAdvisorName() {
         return this.studentData?.facultyAdvisorName || 'Not Assigned';
     }
@@ -172,7 +197,6 @@ export default class StudentSummaryCard extends LightningElement {
         return this.facultyAdvisorId ? `/${this.facultyAdvisorId}` : '#';
     }
 
-    // 12. Admission Date
     get admissionDate() {
         return this.studentData?.admissionDate;
     }

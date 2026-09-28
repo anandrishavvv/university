@@ -1,236 +1,394 @@
 <template>
-    <div class="patient-style-wrapper slds-m-bottom_medium">
-        
-        <!-- Header Banner: Fluid Blue Gradient with Avatar, Student Name, Student ID (UHID), & Active Status -->
-        <div class="hero-banner">
-            <div class="banner-content slds-grid slds-grid_vertical-align-center slds-wrap">
-                <!-- Left: Circular Avatar with 3D Inner Icon -->
-                <div class="avatar-ring slds-m-right_medium">
-                    <div class="avatar-squircle">
-                        <lightning-icon icon-name="standard:avatar" size="small" class="white-avatar-icon"></lightning-icon>
-                    </div>
+    <div class="student-wrapper">
+
+        <div class="student-header">
+            <img src={rgpvCampusUrl} class="header-campus" alt="Campus background">
+
+            <div class="header-left">
+                <div class="avatar">
+                    <img src={studentAvatarUrl} alt={studentName} class="avatar-image">
                 </div>
 
-                <!-- Center: Student Name & ID -->
-                <div class="identity-block slds-col">
-                    <h1 class="student-name-text slds-truncate" title={studentName}>{studentName}</h1>
-                    <div class="student-uhid-text">Student ID: {studentCode}</div>
-                </div>
+                <div class="student-identity">
+                    <h1 class="student-name" title={studentName}>
+                        {studentName}
+                    </h1>
 
-                <!-- Right: Status Pill & Sync Button -->
-                <div class="status-actions-block slds-grid slds-grid_vertical-align-center slds-m-top_x-small slds-m-medium-top_none">
-                    <div class={statusPillClass} title="Enrolment Status">
+                    <span class="student-id">
+                        Student ID: {studentCode}
+                    </span>
+
+                    <div class={statusPillClass}>
                         <span class={statusDotClass}></span>
                         <span>{enrolmentStatus}</span>
                     </div>
-                    <button class="btn-sync slds-m-left_small" onclick={handleRefresh} title="Sync Student Data">
-                        <lightning-icon icon-name="utility:refresh" size="xx-small" class="sync-icon"></lightning-icon>
-                    </button>
                 </div>
+            </div>
+
+            <div class="header-right">
+                <div class="brand-block">
+                    <img src={rgpvLogoUrl} class="brand-crest" alt="RGPV crest">
+                    <div class="brand-text">
+                        <span class="brand-line">RAJIV GANDHI PROUDYOGIKI</span>
+                        <span class="brand-line">VISHWAVIDYALAYA, BHOPAL</span>
+                        <span class="brand-tagline">Excellence in Technical Education</span>
+                    </div>
+                </div>
+
+                <button
+                    class="refresh-btn"
+                    onclick={handleRefresh}
+                    title="Refresh Student Data">
+
+                    <lightning-icon
+                        icon-name="utility:refresh"
+                        size="small"
+                        class="refresh-icon">
+                    </lightning-icon>
+                </button>
             </div>
         </div>
 
-        <!-- Spinner & Error handling -->
         <template lwc:if={isLoading}>
-            <div class="loading-container slds-p-around_xx-large slds-align_absolute-center">
-                <lightning-spinner alternative-text="Loading student data" size="medium"></lightning-spinner>
+            <div class="loading-container">
+                <lightning-spinner
+                    alternative-text="Loading student data"
+                    size="medium">
+                </lightning-spinner>
             </div>
         </template>
+
         <template lwc:elseif={errorMessage}>
-            <div class="slds-p-around_medium error-container">
-                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
-                    <lightning-icon icon-name="utility:error" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
-                    <h2>{errorMessage}</h2>
-                </div>
+            <div class="error-container">
+                <lightning-icon
+                    icon-name="utility:error"
+                    size="x-small"
+                    variant="inverse">
+                </lightning-icon>
+                <span>{errorMessage}</span>
             </div>
         </template>
 
-        <!-- Main Body: Clean Category Cards with 3D Squircles & Pastel Themes -->
         <template lwc:else>
-            <div class="sections-container">
-                
-                <!-- SECTION 1: Academic Standing & Performance -->
-                <div class="category-card">
-                    <!-- Section Header -->
-                    <div class="section-header slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
-                        <div class="section-icon-box box-blue slds-m-right_small">
-                            <lightning-icon icon-name="utility:education" size="x-small" class="white-icon"></lightning-icon>
+
+            <section class="section academic-section">
+
+                <div class="section-heading">
+                    <div class="section-icon orange-icon">
+                        <lightning-icon
+                            icon-name="utility:education"
+                            size="small"
+                            class="white-icon">
+                        </lightning-icon>
+                    </div>
+
+                    <div class="section-title-area">
+                        <h2>Academic Performance</h2>
+                        <span>Student academic snapshot</span>
+                    </div>
+
+                    <div class="rgpv-brand">
+                        <img src={rgpvAcadWatermarkUrl} alt="RGPV crest" class="brand-watermark-img">
+                    </div>
+                </div>
+
+                <div class="academic-grid">
+
+                    <div class="metric-card metric-orange">
+                        <div class="metric-top">
+                            <div class="metric-icon icon-orange">
+                                <lightning-icon
+                                    icon-name="utility:award"
+                                    size="small"
+                                    class="white-icon">
+                                </lightning-icon>
+                            </div>
+
+                            <div class="metric-ghost" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="3" y="13" width="4" height="8" rx="1.4"></rect>
+                                    <rect x="10" y="8" width="4" height="13" rx="1.4"></rect>
+                                    <rect x="17" y="3" width="4" height="18" rx="1.4"></rect>
+                                </svg>
+                            </div>
                         </div>
-                        <div>
-                            <h2 class="section-title">Academic Performance</h2>
-                            <p class="section-subtitle">Overview of student grades, attendance & fee standing</p>
+
+                        <span class="metric-label">GPA</span>
+                        <div class="metric-value">
+                            {formattedGpa}
+                            <small>/ 4.00</small>
+                        </div>
+
+                        <div class="metric-track">
+                            <div class={gpaBarClass}></div>
                         </div>
                     </div>
 
-                    <!-- 3-Column Responsive Grid of 3D Squircle Tiles -->
-                    <div class="tiles-grid">
-                        
-                        <!-- Field 4: Cumulative GPA (Blue Theme) -->
-                        <div class="metric-tile tile-blue">
-                            <div class="tile-icon-squircle squircle-blue">
-                                <lightning-icon icon-name="utility:award" size="small" class="white-icon"></lightning-icon>
+                    <div class="metric-card metric-green">
+                        <div class="metric-top">
+                            <div class="metric-icon icon-green">
+                                <lightning-icon
+                                    icon-name="utility:check"
+                                    size="small"
+                                    class="white-icon">
+                                </lightning-icon>
                             </div>
-                            <div class="tile-text">
-                                <span class="tile-label">Cumulative GPA</span>
-                                <div class="tile-val-row">
-                                    <span class="tile-primary-val">{formattedGpa}</span>
-                                    <span class="tile-sub-val"> / 4.00</span>
-                                </div>
+
+                            <div class="metric-ghost" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3,17 9,11 13,14 21,5"></polyline>
+                                    <polyline points="16,5 21,5 21,10"></polyline>
+                                </svg>
                             </div>
-                            <div class="bottom-accent-bar bar-blue"></div>
                         </div>
 
-                        <!-- Field 5: Attendance (Green Theme) -->
-                        <div class="metric-tile tile-green">
-                            <div class="tile-icon-squircle squircle-green">
-                                <lightning-icon icon-name="utility:check" size="small" class="white-icon"></lightning-icon>
-                            </div>
-                            <div class="tile-text">
-                                <span class="tile-label">Attendance</span>
-                                <div class="tile-val-row">
-                                    <span class="tile-primary-val">{formattedAttendance}%</span>
-                                </div>
-                            </div>
-                            <div class="bottom-accent-bar bar-green"></div>
+                        <span class="metric-label">Attendance</span>
+                        <div class="metric-value">
+                            {formattedAttendance}%
                         </div>
 
-                        <!-- Field 6: Fee Status (Adaptive Theme) -->
-                        <div class={feeTileClass}>
+                        <div class="metric-track">
+                            <div class={attendanceBarClass}></div>
+                        </div>
+                    </div>
+
+                    <div class={feeTileClass}>
+                        <div class="metric-top">
                             <div class={feeSquircleClass}>
-                                <lightning-icon icon-name="utility:money" size="small" class="white-icon"></lightning-icon>
+                                <lightning-icon
+                                    icon-name="utility:money"
+                                    size="small"
+                                    class="white-icon">
+                                </lightning-icon>
                             </div>
-                            <div class="tile-text">
-                                <span class="tile-label">Fee Status</span>
-                                <div class="tile-val-row">
-                                    <span class={feeValTextClass}>{feeStatus}</span>
-                                </div>
+
+                            <div class="metric-ghost" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="3" y="5" width="18" height="3.2" rx="1.6"></rect>
+                                    <rect x="3" y="10.4" width="13" height="3.2" rx="1.6"></rect>
+                                    <rect x="3" y="15.8" width="8" height="3.2" rx="1.6"></rect>
+                                </svg>
                             </div>
-                            <div class={feeBarClass}></div>
                         </div>
 
-                        <!-- Field 7: Registered Courses (Cyan Theme) -->
-                        <div class="metric-tile tile-cyan">
-                            <div class="tile-icon-squircle squircle-cyan">
-                                <lightning-icon icon-name="utility:notebook" size="small" class="white-icon"></lightning-icon>
+                        <span class="metric-label">Fee Status</span>
+                        <div class={feeValTextClass}>
+                            {feeStatus}
+                        </div>
+                    </div>
+
+                    <div class="metric-card metric-blue">
+                        <div class="metric-top">
+                            <div class="metric-icon icon-blue">
+                                <lightning-icon
+                                    icon-name="utility:notebook"
+                                    size="small"
+                                    class="white-icon">
+                                </lightning-icon>
                             </div>
-                            <div class="tile-text">
-                                <span class="tile-label">Registered Courses</span>
-                                <div class="tile-val-row">
-                                    <span class="tile-primary-val">{registeredCourseCount}</span>
-                                    <span class="tile-sub-val"> Active</span>
-                                </div>
+
+                            <div class="metric-ghost" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="12,3 22,8 12,13 2,8"></polygon>
+                                    <polygon points="12,12 22,17 12,22 2,17" opacity="0.55"></polygon>
+                                </svg>
                             </div>
-                            <div class="bottom-accent-bar bar-cyan"></div>
                         </div>
 
+                        <span class="metric-label">Courses</span>
+                        <div class="metric-value">
+                            {registeredCourseCount}
+                            <small>Active</small>
+                        </div>
+
+                        <div class="metric-track">
+                            <div class={courseBarClass}></div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="section institutional-section">
+
+                <div class="section-heading">
+                    <div class="section-icon purple-icon">
+                        <lightning-icon
+                            icon-name="utility:company"
+                            size="small"
+                            class="white-icon">
+                        </lightning-icon>
+                    </div>
+
+                    <div class="section-title-area">
+                        <h2>Enrollment & Institutional Details</h2>
+                        <span>Program and academic information</span>
+                    </div>
+
+                    <div class="rgpv-brand">
+                        <img src={rgpvInstWatermarkUrl} alt="RGPV crest" class="brand-watermark-img">
                     </div>
                 </div>
 
-                <!-- SECTION 2: Enrolment & Institutional Details -->
-                <div class="category-card slds-m-top_medium">
-                    <!-- Section Header -->
-                    <div class="section-header slds-grid slds-grid_vertical-align-center slds-m-bottom_medium">
-                        <div class="section-icon-box box-purple slds-m-right_small">
-                            <lightning-icon icon-name="utility:company" size="x-small" class="white-icon"></lightning-icon>
+                <div class="details-grid">
+
+                    <div class="detail-card detail-card-3col tint-orange">
+                        <div class="detail-icon">
+                            <lightning-icon
+                                icon-name="utility:standard_objects"
+                                size="small">
+                            </lightning-icon>
                         </div>
-                        <div>
-                            <h2 class="section-title">Enrolment & Institutional Details</h2>
-                            <p class="section-subtitle">Program curriculum, department, and faculty assignment</p>
+
+                        <div class="detail-content">
+                            <span class="detail-label">Program</span>
+
+                            <template lwc:if={programId}>
+                                <a
+                                    href={programUrl}
+                                    class="detail-value link value-program"
+                                    title={programName}>
+                                    {programName}
+                                </a>
+                            </template>
+
+                            <template lwc:else>
+                                <span
+                                    class="detail-value value-program"
+                                    title={programName}>
+                                    {programName}
+                                </span>
+                            </template>
                         </div>
+
+                        <lightning-icon
+                            icon-name="utility:education"
+                            size="small"
+                            class="detail-ghost">
+                        </lightning-icon>
                     </div>
 
-                    <!-- 3-Column Responsive Grid of 3D Squircle Tiles -->
-                    <div class="tiles-grid">
-                        
-                        <!-- Field 8: Program (Purple Theme) -->
-                        <div class="metric-tile tile-purple">
-                            <div class="tile-icon-squircle squircle-purple">
-                                <lightning-icon icon-name="utility:standard_objects" size="small" class="white-icon"></lightning-icon>
-                            </div>
-                            <div class="tile-text slds-truncate">
-                                <span class="tile-label">Program</span>
-                                <div class="tile-val-row slds-truncate">
-                                    <template lwc:if={programId}>
-                                        <a href={programUrl} class="tile-link slds-truncate" title={programName}>{programName}</a>
-                                    </template>
-                                    <template lwc:else>
-                                        <span class="tile-primary-val slds-truncate" title={programName}>{programName}</span>
-                                    </template>
-                                </div>
-                            </div>
-                            <div class="bottom-accent-bar bar-purple"></div>
+                    <div class="detail-card detail-card-3col tint-blue">
+                        <div class="detail-icon">
+                            <lightning-icon
+                                icon-name="utility:work_order_type"
+                                size="small">
+                            </lightning-icon>
                         </div>
 
-                        <!-- Field 9: Department (Indigo Theme) -->
-                        <div class="metric-tile tile-indigo">
-                            <div class="tile-icon-squircle squircle-indigo">
-                                <lightning-icon icon-name="utility:work_order_type" size="small" class="white-icon"></lightning-icon>
-                            </div>
-                            <div class="tile-text slds-truncate">
-                                <span class="tile-label">Department</span>
-                                <div class="tile-val-row slds-truncate">
-                                    <span class="tile-primary-val slds-truncate" title={department}>{department}</span>
-                                </div>
-                            </div>
-                            <div class="bottom-accent-bar bar-indigo"></div>
+                        <div class="detail-content">
+                            <span class="detail-label">Department</span>
+                            <span
+                                class="detail-value"
+                                title={department}>
+                                {department}
+                            </span>
                         </div>
 
-                        <!-- Field 10: Semester (Gold/Amber Theme) -->
-                        <div class="metric-tile tile-amber">
-                            <div class="tile-icon-squircle squircle-amber">
-                                <lightning-icon icon-name="utility:event" size="small" class="white-icon"></lightning-icon>
-                            </div>
-                            <div class="tile-text">
-                                <span class="tile-label">Current Semester</span>
-                                <div class="tile-val-row">
-                                    <span class="tile-primary-val">{semester}</span>
-                                </div>
-                            </div>
-                            <div class="bottom-accent-bar bar-amber"></div>
-                        </div>
-
-                        <!-- Field 11: Faculty Advisor (Rose/Red Theme) -->
-                        <div class="metric-tile tile-rose">
-                            <div class="tile-icon-squircle squircle-rose">
-                                <lightning-icon icon-name="utility:user" size="small" class="white-icon"></lightning-icon>
-                            </div>
-                            <div class="tile-text slds-truncate">
-                                <span class="tile-label">Faculty Advisor</span>
-                                <div class="tile-val-row slds-truncate">
-                                    <template lwc:if={facultyAdvisorId}>
-                                        <a href={facultyAdvisorUrl} class="tile-link slds-truncate" title={facultyAdvisorName}>{facultyAdvisorName}</a>
-                                    </template>
-                                    <template lwc:else>
-                                        <span class="tile-primary-val slds-truncate" title={facultyAdvisorName}>{facultyAdvisorName}</span>
-                                    </template>
-                                </div>
-                            </div>
-                            <div class="bottom-accent-bar bar-rose"></div>
-                        </div>
-
-                        <!-- Field 12: Admission Date (Teal Theme) -->
-                        <div class="metric-tile tile-teal">
-                            <div class="tile-icon-squircle squircle-teal">
-                                <lightning-icon icon-name="utility:date_time" size="small" class="white-icon"></lightning-icon>
-                            </div>
-                            <div class="tile-text">
-                                <span class="tile-label">Admission Date</span>
-                                <div class="tile-val-row">
-                                    <template lwc:if={admissionDate}>
-                                        <lightning-formatted-date-time value={admissionDate} year="numeric" month="2-digit" day="2-digit" class="tile-primary-val"></lightning-formatted-date-time>
-                                    </template>
-                                    <template lwc:else>
-                                        <span class="tile-primary-val">Not Set</span>
-                                    </template>
-                                </div>
-                            </div>
-                            <div class="bottom-accent-bar bar-teal"></div>
-                        </div>
-
+                        <lightning-icon
+                            icon-name="utility:company"
+                            size="small"
+                            class="detail-ghost">
+                        </lightning-icon>
                     </div>
+
+                    <div class="detail-card detail-card-3col tint-amber">
+                        <div class="detail-icon">
+                            <lightning-icon
+                                icon-name="utility:event"
+                                size="small">
+                            </lightning-icon>
+                        </div>
+
+                        <div class="detail-content">
+                            <span class="detail-label">Current Semester</span>
+                            <span class="detail-value">
+                                {semester}
+                            </span>
+                        </div>
+
+                        <lightning-icon
+                            icon-name="utility:notebook"
+                            size="small"
+                            class="detail-ghost">
+                        </lightning-icon>
+                    </div>
+
+                    <div class="detail-card detail-card-2col tint-purple">
+                        <div class="detail-icon">
+                            <lightning-icon
+                                icon-name="utility:user"
+                                size="small">
+                            </lightning-icon>
+                        </div>
+
+                        <div class="detail-content">
+                            <span class="detail-label">Faculty Advisor</span>
+
+                            <template lwc:if={facultyAdvisorId}>
+                                <a
+                                    href={facultyAdvisorUrl}
+                                    class="detail-value link value-advisor"
+                                    title={facultyAdvisorName}>
+                                    {facultyAdvisorName}
+                                </a>
+                            </template>
+
+                            <template lwc:else>
+                                <span
+                                    class="detail-value value-advisor"
+                                    title={facultyAdvisorName}>
+                                    {facultyAdvisorName}
+                                </span>
+                            </template>
+                        </div>
+
+                        <lightning-icon
+                            icon-name="utility:user_group"
+                            size="small"
+                            class="detail-ghost">
+                        </lightning-icon>
+                    </div>
+
+                    <div class="detail-card detail-card-2col tint-green">
+                        <div class="detail-icon">
+                            <lightning-icon
+                                icon-name="utility:date_time"
+                                size="small">
+                            </lightning-icon>
+                        </div>
+
+                        <div class="detail-content">
+                            <span class="detail-label">Admission Date</span>
+
+                            <template lwc:if={admissionDate}>
+                                <lightning-formatted-date-time
+                                    value={admissionDate}
+                                    year="numeric"
+                                    month="short"
+                                    day="2-digit"
+                                    class="detail-value">
+                                </lightning-formatted-date-time>
+                            </template>
+
+                            <template lwc:else>
+                                <span class="detail-value">
+                                    Not Set
+                                </span>
+                            </template>
+                        </div>
+
+                        <lightning-icon
+                            icon-name="utility:event"
+                            size="small"
+                            class="detail-ghost">
+                        </lightning-icon>
+                    </div>
+
                 </div>
+            </section>
 
-            </div>
         </template>
     </div>
 </template>

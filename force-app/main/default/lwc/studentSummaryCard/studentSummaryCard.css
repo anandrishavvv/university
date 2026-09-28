@@ -1,494 +1,652 @@
 :host {
     display: block;
-    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --orange: #f05a0a;
+    --orange-dark: #d94700;
+    --orange-light: #fff1e8;
+    --text: #172033;
+    --muted: #718096;
+    --surface: #ffffff;
 }
 
-.patient-style-wrapper {
-    font-family: var(--font-family);
-    background: #f8fafc;
-    border-radius: 20px;
-    padding: 12px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 20px rgba(0, 45, 110, 0.04);
+.student-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    background: linear-gradient(145deg, #f8fafc, #eef2f7);
+    border-radius: 22px;
 }
 
-/* =========================================================================
-   1. HERO BANNER (Fluid Blue Gradient with Waves)
-   ========================================================================= */
-.hero-banner {
+.student-header {
     position: relative;
+    min-height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 17px;
     overflow: hidden;
-    background: linear-gradient(135deg, #0052cc 0%, #006ce6 55%, #0099ff 100%);
-    border-radius: 18px;
-    padding: 18px 24px;
-    box-shadow: 0 8px 24px -4px rgba(0, 82, 204, 0.35);
-    margin-bottom: 16px;
+    background: linear-gradient(135deg, #dc4700 0%, #f45d09 48%, #ff9a4b 100%);
+    box-shadow:
+        0 12px 25px rgba(214, 69, 0, 0.28),
+        inset 0 2px 2px rgba(255, 255, 255, 0.32),
+        inset 0 -4px 8px rgba(125, 35, 0, 0.18);
 }
 
-/* Fluid Organic Wave Graphic in background */
-.hero-banner::after {
-    content: '';
+.header-campus {
     position: absolute;
-    right: -40px;
-    bottom: -60px;
-    width: 260px;
-    height: 260px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.18;
     pointer-events: none;
 }
 
-.banner-content {
+.student-header::after {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    right: -45px;
+    top: -70px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.13);
+}
+
+.header-left,
+.header-right {
     position: relative;
     z-index: 2;
-}
-
-/* Avatar Ring */
-.avatar-ring {
-    width: 58px;
-    height: 58px;
-    border-radius: 50%;
-    background: #ffffff;
     display: flex;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
-    flex-shrink: 0;
 }
 
-.avatar-squircle {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #7c3aed, #6d28d9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.4), 0 2px 6px rgba(109, 40, 217, 0.3);
-}
-
-.white-avatar-icon {
-    --sds-c-icon-color-foreground-default: #ffffff;
-    --slds-c-icon-color-foreground: #ffffff;
-}
-
-/* Student Title & UHID */
-.identity-block {
+.header-left {
     min-width: 0;
 }
 
-.student-name-text {
-    font-size: 1.35rem;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    margin: 0;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.student-uhid-text {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9);
-    margin-top: 3px;
-    letter-spacing: 0.02em;
-}
-
-/* Status Pill & Dot */
-.status-pill {
-    display: inline-flex;
-    align-items: center;
+.header-right {
     gap: 7px;
-    padding: 6px 14px;
-    border-radius: 9999px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
-.pill-active {
-    background: #e6f7ec;
-    color: #166534;
-    border: 1px solid #bbf7d0;
+.avatar {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #ffb36f;
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0 6px 14px rgba(92, 25, 0, 0.25),
+        inset 0 2px 3px rgba(255, 255, 255, 0.45);
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.student-identity {
+    min-width: 0;
+    margin-left: 9px;
+}
+
+.student-name {
+    margin: 0;
+    color: #ffffff;
+    font-size: 0.98rem;
+    line-height: 1.15;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.student-id {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.64rem;
+    font-weight: 600;
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.96);
+    color: #14733c;
+    font-size: 0.65rem;
+    font-weight: 800;
+    box-shadow:
+        0 4px 10px rgba(92, 30, 0, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
 }
 
 .pill-pending {
-    background: #fefce8;
-    color: #854d0e;
-    border: 1px solid #fef08a;
+    color: #9a5b00;
 }
 
 .pill-graduated {
-    background: #eff6ff;
-    color: #1e40af;
-    border: 1px solid #bfdbfe;
+    color: #2456a6;
 }
 
 .pill-withdrawn {
-    background: #fef2f2;
-    color: #991b1b;
-    border: 1px solid #fecaca;
+    color: #b42318;
 }
 
 .pill-default {
-    background: #f1f5f9;
-    color: #334155;
-    border: 1px solid #cbd5e1;
+    color: #475467;
 }
 
-/* Pulsing Status Dot */
 .status-dot {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    display: inline-block;
     flex-shrink: 0;
 }
 
 .dot-green {
-    background: #22c55e;
-    box-shadow: 0 0 6px #22c55e;
-    animation: livePulse 2s infinite ease-in-out;
+    background: #16c56a;
+    box-shadow: 0 0 6px rgba(22, 197, 106, 0.7);
 }
 
 .dot-amber {
-    background: #eab308;
-    box-shadow: 0 0 6px #eab308;
+    background: #f5a623;
 }
 
 .dot-blue {
-    background: #3b82f6;
-    box-shadow: 0 0 6px #3b82f6;
+    background: #4285f4;
 }
 
 .dot-red {
-    background: #ef4444;
-    box-shadow: 0 0 6px #ef4444;
+    background: #e5484d;
 }
 
 .dot-gray {
-    background: #94a3b8;
+    background: #98a2b3;
 }
 
-@keyframes livePulse {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.25);
-        opacity: 0.7;
-    }
-}
-
-/* Sync Button */
-.btn-sync {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
+.refresh-btn {
+    width: 29px;
+    height: 29px;
+    padding: 0;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.16);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(4px);
+    transition: 0.2s ease;
 }
 
-.btn-sync:hover {
-    background: rgba(255, 255, 255, 0.35);
-    transform: rotate(45deg);
+.refresh-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(25deg);
 }
 
-.sync-icon {
+.refresh-icon {
     --sds-c-icon-color-foreground-default: #ffffff;
     --slds-c-icon-color-foreground: #ffffff;
 }
 
-/* =========================================================================
-   2. CATEGORY CARDS & SECTION HEADERS
-   ========================================================================= */
-.category-card {
-    background: #ffffff;
+.section {
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+    padding: 11px;
     border-radius: 18px;
-    padding: 18px 20px 22px;
-    box-shadow: 0 4px 20px rgba(0, 45, 110, 0.04);
-    border: 1px solid #e9eef5;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow:
+        0 10px 25px rgba(35, 48, 70, 0.10),
+        0 2px 5px rgba(35, 48, 70, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
 }
 
-.section-icon-box {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
+.academic-section {
+    background:
+        linear-gradient(135deg, rgba(255, 250, 246, 0.98), rgba(255, 255, 255, 0.94));
+}
+
+.institutional-section {
+    background:
+        linear-gradient(135deg, rgba(248, 247, 255, 0.98), rgba(255, 255, 255, 0.94));
+}
+
+.section-watermark {
+    position: absolute;
+    width: 145px;
+    height: 145px;
+    object-fit: contain;
+    right: -28px;
+    bottom: -42px;
+    opacity: 0.055;
+    pointer-events: none;
+    filter: grayscale(1);
+}
+
+.section-heading {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    margin-bottom: 8px;
+}
+
+.section-icon {
+    width: 31px;
+    height: 31px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    margin-right: 8px;
+    box-shadow:
+        0 5px 10px rgba(220, 70, 0, 0.22),
+        inset 0 2px 3px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 3px rgba(120, 35, 0, 0.16);
+}
+
+.orange-icon {
+    background: linear-gradient(145deg, #ff792c, #e44b00);
+}
+
+.section-title-area {
+    min-width: 0;
+    flex: 1;
+}
+
+.section-title-area h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 0.79rem;
+    line-height: 1.2;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.section-title-area span {
+    display: block;
+    margin-top: 2px;
+    color: #7a8495;
+    font-size: 0.58rem;
+    font-weight: 500;
+}
+
+.rgpv-brand {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.brand-watermark-img {
+    height: 38px;
+    object-fit: contain;
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+.academic-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+}
+
+.metric-card {
+    min-width: 0;
+    min-height: 59px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid;
+    box-sizing: border-box;
+    box-shadow:
+        0 5px 10px rgba(40, 50, 70, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.85);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 9px 16px rgba(40, 50, 70, 0.13),
+        inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+.metric-orange {
+    background: linear-gradient(145deg, #fff9f3, #fff0e3);
+    border-color: #ffd3b0;
+}
+
+.metric-green,
+.fee-green {
+    background: linear-gradient(145deg, #f4fff8, #e8fff1);
+    border-color: #bdeed0;
+}
+
+.metric-cyan {
+    background: linear-gradient(145deg, #f1fdff, #e5faff);
+    border-color: #aee8f2;
+}
+
+.fee-orange {
+    background: linear-gradient(145deg, #fffdf2, #fff4c9);
+    border-color: #f7d66b;
+}
+
+.fee-red {
+    background: linear-gradient(145deg, #fff6f6, #ffeaea);
+    border-color: #f3b5b5;
+}
+
+.fee-blue {
+    background: linear-gradient(145deg, #f4f8ff, #eaf1ff);
+    border-color: #c5d7ff;
+}
+
+.metric-icon {
+    width: 30px;
+    height: 30px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    box-shadow:
+        0 5px 9px rgba(30, 40, 50, 0.18),
+        inset 0 2px 2px rgba(255, 255, 255, 0.55),
+        inset 0 -2px 2px rgba(0, 0, 0, 0.14);
 }
 
-.box-blue {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+.icon-orange {
+    background: linear-gradient(145deg, #ff7b27, #ec5607);
 }
 
-.box-purple {
-    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+.icon-green {
+    background: linear-gradient(145deg, #35d477, #12a957);
+}
+
+.icon-cyan {
+    background: linear-gradient(145deg, #1ac4dc, #0899b2);
+}
+
+.icon-blue {
+    background: linear-gradient(145deg, #5b91f5, #356fd1);
+}
+
+.icon-red {
+    background: linear-gradient(145deg, #f56b6b, #d93434);
+}
+
+.metric-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.metric-label {
+    display: block;
+    color: #69758a;
+    font-size: 0.55rem;
+    line-height: 1.15;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.metric-value {
+    margin-top: 2px;
+    color: #172033;
+    font-size: 0.76rem;
+    line-height: 1.15;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.metric-value small {
+    color: #8a94a6;
+    font-size: 0.52rem;
+    font-weight: 700;
+}
+
+.metric-track {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    margin-top: 7px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+}
+
+.metric-fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.fill-orange {
+    width: 78%;
+    background: linear-gradient(90deg, #ff9a4b, #f05a0a);
+}
+
+.fill-green {
+    width: 76%;
+    background: linear-gradient(90deg, #38d39f, #12a957);
+}
+
+.fill-blue {
+    width: 68%;
+    background: linear-gradient(90deg, #57c3ff, #1d7af0);
+}
+
+.value-green {
+    color: #16804b;
+}
+
+.value-orange {
+    color: #b85b00;
+}
+
+.value-red {
+    color: #b42318;
+}
+
+.details-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 7px;
+}
+
+.detail-card-3col {
+    grid-column: span 2;
+}
+
+.detail-card-2col {
+    grid-column: span 3;
+}
+
+.detail-card {
+    min-width: 0;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px;
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid #e1e6ef;
+    box-shadow:
+        0 4px 9px rgba(35, 45, 65, 0.07),
+        inset 0 1px 1px rgba(255, 255, 255, 0.95);
+    transition: 0.18s ease;
+}
+
+.detail-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 14px rgba(35, 45, 65, 0.11),
+        inset 0 1px 1px rgba(255, 255, 255, 0.95);
+}
+
+.detail-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    box-shadow:
+        0 4px 8px rgba(40, 45, 60, 0.10),
+        inset 0 1px 2px rgba(255, 255, 255, 0.85);
+}
+
+.orange-soft {
+    background: linear-gradient(145deg, #fff1e5, #ffe0c5);
+}
+
+.blue-soft {
+    background: linear-gradient(145deg, #eef5ff, #dceaff);
+}
+
+.amber-soft {
+    background: linear-gradient(145deg, #fff9df, #fff0ae);
+}
+
+.purple-soft {
+    background: linear-gradient(145deg, #f5efff, #e9ddff);
+}
+
+.green-soft {
+    background: linear-gradient(145deg, #edfff5, #d4f8e3);
+}
+
+.detail-content {
+    min-width: 0;
+    flex: 1;
+}
+
+.detail-label {
+    display: block;
+    color: #7b8799;
+    font-size: 0.52rem;
+    line-height: 1.1;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-value {
+    display: block;
+    margin-top: 2px;
+    color: #172033;
+    font-size: 0.67rem;
+    line-height: 1.15;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.link {
+    color: #d94b05;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #a93800;
+    text-decoration: underline;
 }
 
 .white-icon {
     --sds-c-icon-color-foreground-default: #ffffff;
     --slds-c-icon-color-foreground: #ffffff;
-    fill: #ffffff !important;
 }
 
-.section-title {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #0f172a;
-    line-height: 1.2;
-    margin: 0;
-    letter-spacing: -0.01em;
-}
-
-.section-subtitle {
-    font-size: 0.78rem;
-    color: #64748b;
-    margin: 2px 0 0;
-    font-weight: 500;
-}
-
-/* =========================================================================
-   3. RESPONSIVE GRID & 3D CLAYMORPHIC SQUIRCLE TILES
-   ========================================================================= */
-.tiles-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 14px;
-}
-
-/* Metric Tile Container */
-.metric-tile {
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 18px 18px;
-    border-radius: 16px;
-    border: 1px solid;
-    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.02);
-}
-
-.metric-tile:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
-}
-
-/* 3D Embossed Squircle Icon */
-.tile-icon-squircle {
-    width: 50px;
-    height: 50px;
-    border-radius: 15px;
+.loading-container {
+    min-height: 180px;
+    margin-top: 10px;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(35, 48, 70, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    /* Skeuomorphic / Claymorphic 3D highlight & shadow */
-    box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.25), 
-                inset 0 2px 3px rgba(255, 255, 255, 0.65), 
-                inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-    transition: transform 0.2s ease;
 }
 
-.metric-tile:hover .tile-icon-squircle {
-    transform: scale(1.04);
-}
-
-/* Bottom Accent Anchor Bar */
-.bottom-accent-bar {
-    position: absolute;
-    bottom: 0;
-    left: 18px;
-    right: 18px;
-    height: 3.5px;
-    border-radius: 4px 4px 0 0;
-}
-
-/* Tile Text Anatomy */
-.tile-text {
+.error-container {
     display: flex;
-    flex-direction: column;
-    min-width: 0;
-    flex: 1;
-}
-
-.tile-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #64748b;
-    text-transform: capitalize;
-    letter-spacing: 0.02em;
-    margin-bottom: 2px;
-}
-
-.tile-val-row {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-}
-
-.tile-primary-val {
-    font-size: 1.15rem;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 13px;
+    background: #fff1f0;
+    color: #b42318;
+    font-size: 0.7rem;
     font-weight: 700;
-    color: #0f172a;
-    line-height: 1.2;
 }
 
-.tile-sub-val {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #94a3b8;
+@media (max-width: 480px) {
+    .academic-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .details-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .student-header {
+        padding: 9px;
+    }
+
+    .student-name {
+        font-size: 0.88rem;
+    }
+
+    .status-pill {
+        padding: 5px 7px;
+    }
 }
 
-.tile-link {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #0256cc;
-    text-decoration: none;
-    transition: color 0.15s ease;
-}
+@media (max-width: 330px) {
+    .academic-grid,
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
 
-.tile-link:hover {
-    color: #003a8c;
-    text-decoration: underline;
-}
+    .header-right {
+        gap: 4px;
+    }
 
-/* =========================================================================
-   4. COLOR THEMES (Pastel Card + Saturated 3D Squircle + Bottom Bar)
-   ========================================================================= */
-
-/* Blue Theme (GPA) */
-.tile-blue {
-    background-color: #f0f7ff;
-    border-color: #dbeafe;
-}
-.squircle-blue {
-    background: linear-gradient(145deg, #3b82f6, #2563eb);
-    box-shadow: 0 8px 16px -2px rgba(37, 99, 235, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-blue {
-    background: #2563eb;
-}
-
-/* Green Theme (Attendance / Paid) */
-.tile-green, .tile-emerald {
-    background-color: #f0fdf4;
-    border-color: #dcfce7;
-}
-.squircle-green, .squircle-emerald {
-    background: linear-gradient(145deg, #22c55e, #16a34a);
-    box-shadow: 0 8px 16px -2px rgba(22, 163, 74, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-green, .bar-emerald {
-    background: #16a34a;
-}
-.text-emerald {
-    color: #15803d;
-}
-
-/* Cyan Theme (Registered Courses) */
-.tile-cyan {
-    background-color: #f0fdfa;
-    border-color: #ccfbf1;
-}
-.squircle-cyan {
-    background: linear-gradient(145deg, #06b6d4, #0891b2);
-    box-shadow: 0 8px 16px -2px rgba(8, 145, 178, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-cyan {
-    background: #0891b2;
-}
-
-/* Purple Theme (Program) */
-.tile-purple {
-    background-color: #faf5ff;
-    border-color: #f3e8ff;
-}
-.squircle-purple {
-    background: linear-gradient(145deg, #a855f7, #7e22ce);
-    box-shadow: 0 8px 16px -2px rgba(126, 34, 206, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-purple {
-    background: #7e22ce;
-}
-
-/* Indigo Theme (Department) */
-.tile-indigo {
-    background-color: #f5f3ff;
-    border-color: #ede9fe;
-}
-.squircle-indigo {
-    background: linear-gradient(145deg, #6366f1, #4338ca);
-    box-shadow: 0 8px 16px -2px rgba(67, 56, 202, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-indigo {
-    background: #4338ca;
-}
-
-/* Amber / Gold Theme (Semester / Fee Pending) */
-.tile-amber {
-    background-color: #fefce8;
-    border-color: #fef08a;
-}
-.squircle-amber {
-    background: linear-gradient(145deg, #eab308, #ca8a04);
-    box-shadow: 0 8px 16px -2px rgba(202, 138, 4, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-amber {
-    background: #ca8a04;
-}
-.text-amber {
-    color: #a16207;
-}
-
-/* Rose / Red Theme (Faculty Advisor / Fee Overdue) */
-.tile-rose {
-    background-color: #fff1f2;
-    border-color: #ffe4e6;
-}
-.squircle-rose {
-    background: linear-gradient(145deg, #f43f5e, #e11d48);
-    box-shadow: 0 8px 16px -2px rgba(225, 29, 72, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-rose {
-    background: #e11d48;
-}
-.text-rose {
-    color: #be123c;
-}
-
-/* Teal Theme (Admission Date) */
-.tile-teal {
-    background-color: #f0fdfa;
-    border-color: #ccfbf1;
-}
-.squircle-teal {
-    background: linear-gradient(145deg, #14b8a6, #0d9488);
-    box-shadow: 0 8px 16px -2px rgba(13, 148, 136, 0.4), inset 0 2px 3px rgba(255, 255, 255, 0.65), inset 0 -2px 3px rgba(0, 0, 0, 0.18);
-}
-.bar-teal {
-    background: #0d9488;
-}
-
-/* =========================================================================
-   5. LOADING & ERROR STATES
-   ========================================================================= */
-.loading-container, .error-container {
-    background: #ffffff;
-    border-radius: 18px;
-    box-shadow: 0 4px 20px rgba(0, 45, 110, 0.04);
+    .status-pill {
+        font-size: 0.58rem;
+    }
 }
