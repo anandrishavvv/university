@@ -197,13 +197,13 @@
 }
 
 .watermark-backdrop-logo {
-    max-width: 320px;
-    max-height: 320px;
-    width: 290px;
-    height: 290px;
+    max-width: 95%;
+    max-height: 440px;
+    width: 380px;
+    height: 380px;
     object-fit: contain;
-    opacity: 0.15;
-    filter: saturate(115%) contrast(105%);
+    opacity: 0.20;
+    filter: saturate(125%) contrast(108%);
 }
 
 .section {
@@ -213,10 +213,8 @@
     margin-top: 10px;
     padding: 11px 12px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.90);
     box-shadow:
         0 8px 20px rgba(35, 48, 70, 0.05),
         0 2px 4px rgba(35, 48, 70, 0.03),
@@ -224,11 +222,11 @@
 }
 
 .academic-section {
-    background: linear-gradient(135deg, rgba(255, 252, 249, 0.80), rgba(255, 255, 255, 0.74));
+    background: linear-gradient(135deg, rgba(255, 252, 249, 0.70), rgba(255, 255, 255, 0.62));
 }
 
 .institutional-section {
-    background: linear-gradient(135deg, rgba(250, 248, 255, 0.80), rgba(255, 255, 255, 0.74));
+    background: linear-gradient(135deg, rgba(250, 248, 255, 0.70), rgba(255, 255, 255, 0.62));
 }
 
 .section-heading {
@@ -320,8 +318,6 @@
     border-radius: 14px;
     border: 1px solid;
     box-sizing: border-box;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
     box-shadow:
         0 4px 10px rgba(40, 50, 70, 0.04),
         inset 0 1px 1px rgba(255, 255, 255, 0.9);
@@ -336,43 +332,43 @@
 }
 
 .metric-orange {
-    background: linear-gradient(145deg, rgba(255, 248, 244, 0.82), rgba(255, 241, 234, 0.76));
-    border-color: rgba(255, 216, 196, 0.9);
+    background: linear-gradient(145deg, rgba(255, 248, 244, 0.70), rgba(255, 241, 234, 0.60));
+    border-color: rgba(255, 216, 196, 0.85);
 }
 
 .metric-green {
-    background: linear-gradient(145deg, rgba(244, 255, 248, 0.82), rgba(234, 251, 240, 0.76));
-    border-color: rgba(196, 235, 210, 0.9);
+    background: linear-gradient(145deg, rgba(244, 255, 248, 0.70), rgba(234, 251, 240, 0.60));
+    border-color: rgba(196, 235, 210, 0.85);
 }
 
 .metric-amber {
-    background: linear-gradient(145deg, rgba(255, 252, 244, 0.82), rgba(255, 248, 236, 0.76));
-    border-color: rgba(250, 228, 190, 0.9);
+    background: linear-gradient(145deg, rgba(255, 252, 244, 0.70), rgba(255, 248, 236, 0.60));
+    border-color: rgba(250, 228, 190, 0.85);
 }
 
 .fee-orange {
-    background: linear-gradient(145deg, rgba(255, 252, 244, 0.82), rgba(255, 246, 228, 0.76));
-    border-color: rgba(250, 231, 186, 0.9);
+    background: linear-gradient(145deg, rgba(255, 252, 244, 0.70), rgba(255, 246, 228, 0.60));
+    border-color: rgba(250, 231, 186, 0.85);
 }
 
 .fee-red {
-    background: linear-gradient(145deg, rgba(255, 245, 245, 0.82), rgba(255, 236, 238, 0.76));
-    border-color: rgba(252, 207, 207, 0.9);
+    background: linear-gradient(145deg, rgba(255, 245, 245, 0.70), rgba(255, 236, 238, 0.60));
+    border-color: rgba(252, 207, 207, 0.85);
 }
 
 .fee-green {
-    background: linear-gradient(145deg, rgba(244, 255, 248, 0.82), rgba(234, 251, 240, 0.76));
-    border-color: rgba(196, 235, 210, 0.9);
+    background: linear-gradient(145deg, rgba(244, 255, 248, 0.70), rgba(234, 251, 240, 0.60));
+    border-color: rgba(196, 235, 210, 0.85);
 }
 
 .fee-blue {
-    background: linear-gradient(145deg, rgba(244, 248, 255, 0.82), rgba(234, 242, 255, 0.76));
-    border-color: rgba(204, 222, 255, 0.9);
+    background: linear-gradient(145deg, rgba(244, 248, 255, 0.70), rgba(234, 242, 255, 0.60));
+    border-color: rgba(204, 222, 255, 0.85);
 }
 
 .metric-blue {
-    background: linear-gradient(145deg, rgba(244, 248, 255, 0.82), rgba(234, 242, 255, 0.76));
-    border-color: rgba(204, 222, 255, 0.9);
+    background: linear-gradient(145deg, rgba(244, 248, 255, 0.70), rgba(234, 242, 255, 0.60));
+    border-color: rgba(204, 222, 255, 0.85);
 }
 
 .metric-top {
@@ -576,8 +572,6 @@
     border-radius: 13px;
     border: 1px solid;
     box-sizing: border-box;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
     box-shadow:
         0 3px 8px rgba(0, 0, 0, 0.03),
         inset 0 1px 1px rgba(255, 255, 255, 0.9);
@@ -592,28 +586,28 @@
 }
 
 .tint-coral {
-    background: linear-gradient(145deg, rgba(255, 247, 244, 0.82), rgba(255, 239, 233, 0.76));
-    border-color: rgba(255, 216, 203, 0.9);
+    background: linear-gradient(145deg, rgba(255, 247, 244, 0.70), rgba(255, 239, 233, 0.60));
+    border-color: rgba(255, 216, 203, 0.85);
 }
 
 .tint-blue {
-    background: linear-gradient(145deg, rgba(244, 248, 255, 0.82), rgba(234, 242, 255, 0.76));
-    border-color: rgba(204, 222, 255, 0.9);
+    background: linear-gradient(145deg, rgba(244, 248, 255, 0.70), rgba(234, 242, 255, 0.60));
+    border-color: rgba(204, 222, 255, 0.85);
 }
 
 .tint-amber {
-    background: linear-gradient(145deg, rgba(255, 252, 243, 0.82), rgba(255, 248, 230, 0.76));
-    border-color: rgba(250, 232, 190, 0.9);
+    background: linear-gradient(145deg, rgba(255, 252, 243, 0.70), rgba(255, 248, 230, 0.60));
+    border-color: rgba(250, 232, 190, 0.85);
 }
 
 .tint-purple {
-    background: linear-gradient(145deg, rgba(250, 246, 255, 0.82), rgba(242, 234, 255, 0.76));
-    border-color: rgba(229, 214, 255, 0.9);
+    background: linear-gradient(145deg, rgba(250, 246, 255, 0.70), rgba(242, 234, 255, 0.60));
+    border-color: rgba(229, 214, 255, 0.85);
 }
 
 .tint-green {
-    background: linear-gradient(145deg, rgba(244, 255, 247, 0.82), rgba(232, 250, 239, 0.76));
-    border-color: rgba(188, 240, 206, 0.9);
+    background: linear-gradient(145deg, rgba(244, 255, 247, 0.70), rgba(232, 250, 239, 0.60));
+    border-color: rgba(188, 240, 206, 0.85);
 }
 
 .icon-coral {
